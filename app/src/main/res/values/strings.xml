@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">HT</string>
     <string name="select_user">Select User</string>
+    <string name="create_user">Create User</string>
+    <string name="name">Name</string>
+    <string name="add_user">Add User</string>
 </resources>
