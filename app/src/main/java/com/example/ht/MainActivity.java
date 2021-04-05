@@ -54,8 +54,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //CreateUserBtn set up
+        Button createUserBtn = findViewById(R.id.createUserBtn);
+        createUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
+            }
+        });
     }
-
 }

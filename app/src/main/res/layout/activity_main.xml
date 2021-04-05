@@ -13,10 +13,9 @@
         android:text="@string/add_user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717" />
+        app:layout_constraintVertical_bias="0.289" />
 
     <Spinner
         android:id="@+id/userSpinner"
@@ -27,25 +26,31 @@
         app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.421" />
+        app:layout_constraintVertical_bias="0.142" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="131dp"
+        android:layout_height="46dp"
+        android:text="@string/select_user"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
     <FrameLayout
         android:id="@+id/fragmentFrame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="397dp"
+        android:layout_height="416dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.76"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.952">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="131dp"
-            android:layout_height="46dp"
-            android:text="@string/select_user"
-            android:textAlignment="center" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

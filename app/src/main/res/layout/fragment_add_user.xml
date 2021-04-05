@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CA0E0E">
+    android:background="#A2C5FA">
 
     <Button
         android:id="@+id/createUserBtn"
@@ -13,9 +13,10 @@
         android:text="@string/create_user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.532"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.856" />
+        app:layout_constraintVertical_bias="0.647" />
 
     <EditText
         android:id="@+id/editTextName"
@@ -30,6 +31,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295" />
+        app:layout_constraintVertical_bias="0.358" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
