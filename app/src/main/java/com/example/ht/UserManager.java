@@ -7,12 +7,22 @@ public class UserManager {
 
     //Singleton:
     private static UserManager UM = new UserManager();
-    private UserManager() {}
+    private UserManager() {
+        user_array = new ArrayList<>();
+    }
     public static UserManager getInstance() {return UM;}
 
 
-    public void addUser() {}
+    public void addUser(String name) {
+        User user = new User(name);
+        user_array.add(user);
+    }
+
     public void deleteUser(){}
+
+    public ArrayList<User> getUser_array() {
+        return user_array;
+    }
 
 //    public User getUser(){
 //        return User;

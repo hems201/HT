@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Initialize singleton UserManager
+        UserManager UM = UserManager.getInstance();
 
 
         //AddUserBtn set up
@@ -36,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         //UserSpinner set up
         Spinner userSpinner = findViewById(R.id.userSpinner);
-        //hae user lista user managerista
-        //array adapter mahdollisesti
-        //setDropDownViewResource
-        //userSpinner.setAdapter(___);
+        List<User> user_array = UM.getUser_array();
+        ArrayAdapter<User> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,user_array);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userSpinner.setAdapter(spinnerAdapter);
 
         userSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -54,13 +59,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //CreateUserBtn set up
-        Button createUserBtn = findViewById(R.id.createUserBtn);
-        createUserBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
     }
+//  TÄLLÄ HAETTIIN KÄYTTÄJÄTIEDOT FRAGMENTISTA
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        String name;
+//
+//        name = getIntent().getExtras().getString("key");
+//        System.out.println(name + "mainactivitysta");
+//
+//        UserManager UM = UserManager.getInstance();
+//        UM.addUser(name);
+//
+//    }
 }

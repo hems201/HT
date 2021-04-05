@@ -4,9 +4,9 @@ public class User {
     String username;
     String userid; //String vai int parempi?
 
-    public User(String n, String id) {
+    public User(String n) {
         username = n;
-        userid = id;
+        //userid = id;
     }
 
     public String getUsername(){
@@ -17,7 +17,7 @@ public class User {
         return userid;
     }
 
-//    @Override         valikkoa varten
+//    @Override
 //    public toString() {
 //
 //    }
