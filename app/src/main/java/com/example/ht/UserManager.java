@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class UserManager {
     private ArrayList<User> user_array;
+    private int idCounter = 0;
 
     //Singleton:
     private static UserManager UM = new UserManager();
@@ -14,7 +15,8 @@ public class UserManager {
 
 
     public void addUser(String name) {
-        User user = new User(name);
+        idCounter ++;
+        User user = new User(name, idCounter);
         user_array.add(user);
     }
 

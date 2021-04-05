@@ -40,19 +40,21 @@ public class addUserFragment extends Fragment {
     }
 
     //Sends the userinfo to the Mainactivity
+    public void createUser(String name) {
+        Intent intent = new Intent(getActivity().getBaseContext(),MainActivity.class);
+        UserManager UM = UserManager.getInstance();
+        UM.addUser(name);
+        startActivity(intent);
+    }
+
+
+
+
+    //Sends the userinfo to the Mainactivity
 //    public void sendInfo(String name) {
 //        Intent intent = new Intent(getActivity().getBaseContext(),MainActivity.class);
 //        intent.putExtra("key", name);
 //        System.out.println(name + " fragmentista");
 //        startActivity(intent);
 //    }
-
-    //Sends the userinfo to the Mainactivity
-    public void createUser(String name) {
-        Intent intent = new Intent(getActivity().getBaseContext(),MainActivity.class);
-        UserManager UM = UserManager.getInstance();
-        UM.addUser(name);
-        System.out.println(name + " fragmentista");
-        startActivity(intent);
-    }
 }
