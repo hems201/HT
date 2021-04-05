@@ -16,6 +16,8 @@ public class UserManager {
     public void addUser(String name) {
         User user = new User(name);
         user_array.add(user);
+
+        //TODO tiedostoon kirjoitus
     }
 
     public void deleteUser(){}

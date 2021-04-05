@@ -20,6 +20,7 @@ public class CarEntry extends Entry {
     @Override
     public void countTotalCO(ArrayList<Integer> travelValues) {
         //send request to ilmastodieetti to calculate CO2
+        //url example
     }
 
 }
