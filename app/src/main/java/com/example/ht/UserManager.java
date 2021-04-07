@@ -1,9 +1,8 @@
 package com.example.ht;
 
 import android.content.Context;
-import android.renderscript.Element;
+import org.w3c.dom.Element;
 import android.util.Xml;
-import android.view.View;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -33,7 +32,7 @@ public class UserManager {
         user_array = new ArrayList<>();
 
         // add all users to ArrayList
-        readfile();
+        readFile();
     }
     public static UserManager getInstance() {return UM;}
 
@@ -45,10 +44,10 @@ public class UserManager {
 
         System.out.println("Created user " + name);
 
-        writefile(name, idCounter);
+        writeFile(name, idCounter);
     }
 
-    public void readfile() {
+    public void readFile() {
         //read all users in file as usermanager is created
 
         try {
@@ -59,7 +58,7 @@ public class UserManager {
 
             System.out.println(doc1.getDocumentElement().getNodeName());
 
-            NodeList nList = doc1.getDocumentElement().getElementsByTagName("userData");
+            NodeList nList = doc1.getDocumentElement().getElementsByTagName("user");
 
             // add them to arraylist
             parseNode(nList);
@@ -82,24 +81,22 @@ public class UserManager {
             Node node = nList.item(i);
             System.out.println(node.getNodeName());
 
-            /*
             if (node.getNodeType() == node.ELEMENT_NODE) {
                 Element element = (Element) node;
+                System.out.println("getting tags");
+
 
                 user_array.add(new User(
                         element.getElementsByTagName("userName").item(0).getTextContent(),
-                        element.getElementsByTagName("userId").item(0).getTextContent()
+                        Integer.parseInt(element.getElementsByTagName("userId").item(0).getTextContent())
                 ));
                 //keep count of users in the file
                 idCounter++;
             }
-
-             */
-
         }
     }
 
-    public void writefile(String username, int userID) {
+    public void writeFile(String username, int userID) {
         //write new created user into file
         String userId = String.valueOf(userID);
 
@@ -109,15 +106,39 @@ public class UserManager {
             StringWriter writer = new StringWriter();
             xmlSerializer.setOutput(writer);
             xmlSerializer.startDocument("UTF-8", true);
+            xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 
             xmlSerializer.startTag(null, "userData");
+
+            // old users
+            for (int i=1; i<idCounter; i++) {
+                xmlSerializer.startTag(null, "user");
+
                 xmlSerializer.startTag(null, "userName");
-                    xmlSerializer.text(username);
+                xmlSerializer.text(user_array.get(i).username);
                 xmlSerializer.endTag(null, "userName");
 
-                xmlSerializer.startTag(null,"userId");
-                    xmlSerializer.text(userId);
+                xmlSerializer.startTag(null, "userId");
+                xmlSerializer.text(String.valueOf(i));
                 xmlSerializer.endTag(null, "userId");
+
+                xmlSerializer.endTag(null, "user");
+                System.out.println("added old user " +  user_array.get(i).username);
+            }
+
+            // add new user
+            xmlSerializer.startTag(null, "user");
+
+            xmlSerializer.startTag(null, "userName");
+            xmlSerializer.text(username);
+            xmlSerializer.endTag(null, "userName");
+
+            xmlSerializer.startTag(null, "userId");
+            xmlSerializer.text(userId);
+            xmlSerializer.endTag(null, "userId");
+
+            xmlSerializer.endTag(null, "user");
+
             xmlSerializer.endTag(null, "userData");
 
             xmlSerializer.endDocument();
