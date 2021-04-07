@@ -4,4 +4,12 @@
     <string name="create_user">Create User</string>
     <string name="name">Name</string>
     <string name="add_user">Add User</string>
+    <string name="title_activity_2">Activity2</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="see_trip_data">See trip data:</string>
+    <string name="log_a_new_trip_select_transport_mehtod">Log a new trip \n Select transport mehtod:</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.ht;
+package com.example.ht.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.ht.MainActivity;
+import com.example.ht.R;
+import com.example.ht.UserManager;
 
 public class addUserFragment extends Fragment {
     View view;
@@ -35,13 +39,13 @@ public class addUserFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        System.out.println("view created\n");
+        System.out.println("user fragment view created\n");
 
     }
 
     //Sends the userinfo to the Mainactivity
     public void createUser(String name) {
-        Intent intent = new Intent(getActivity().getBaseContext(),MainActivity.class);
+        Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
         UserManager UM = UserManager.getInstance();
         UM.addUser(name);
         startActivity(intent);
