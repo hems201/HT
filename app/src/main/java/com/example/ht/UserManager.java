@@ -1,7 +1,7 @@
 package com.example.ht;
 
 import android.content.Context;
-import android.renderscript.Element;
+import org.w3c.dom.Element;
 import android.util.Xml;
 
 import org.w3c.dom.Document;
@@ -58,7 +58,7 @@ public class UserManager {
 
             System.out.println(doc1.getDocumentElement().getNodeName());
 
-            NodeList nList = doc1.getDocumentElement().getElementsByTagName("userData");
+            NodeList nList = doc1.getDocumentElement().getElementsByTagName("user");
 
             // add them to arraylist
             parseNode(nList);
@@ -85,16 +85,13 @@ public class UserManager {
                 Element element = (Element) node;
                 System.out.println("getting tags");
 
-                /*
+
                 user_array.add(new User(
                         element.getElementsByTagName("userName").item(0).getTextContent(),
-                        element.getElementsByTagName("userId").item(0).getTextContent()
+                        Integer.parseInt(element.getElementsByTagName("userId").item(0).getTextContent())
                 ));
                 //keep count of users in the file
                 idCounter++;
-
-                 */
-
             }
         }
     }
@@ -111,9 +108,11 @@ public class UserManager {
             xmlSerializer.startDocument("UTF-8", true);
             xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 
+            xmlSerializer.startTag(null, "userData");
+
             // old users
             for (int i=1; i<idCounter; i++) {
-                xmlSerializer.startTag(null, "userData");
+                xmlSerializer.startTag(null, "user");
 
                 xmlSerializer.startTag(null, "userName");
                 xmlSerializer.text(user_array.get(i).username);
@@ -123,11 +122,12 @@ public class UserManager {
                 xmlSerializer.text(String.valueOf(i));
                 xmlSerializer.endTag(null, "userId");
 
-                xmlSerializer.endTag(null, "userData");
+                xmlSerializer.endTag(null, "user");
+                System.out.println("added old user " +  user_array.get(i).username);
             }
 
             // add new user
-            xmlSerializer.startTag(null, "userData");
+            xmlSerializer.startTag(null, "user");
 
             xmlSerializer.startTag(null, "userName");
             xmlSerializer.text(username);
@@ -136,6 +136,8 @@ public class UserManager {
             xmlSerializer.startTag(null, "userId");
             xmlSerializer.text(userId);
             xmlSerializer.endTag(null, "userId");
+
+            xmlSerializer.endTag(null, "user");
 
             xmlSerializer.endTag(null, "userData");
 
