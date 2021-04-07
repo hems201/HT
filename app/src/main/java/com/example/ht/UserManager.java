@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class UserManager {
     private ArrayList<User> user_array;
     private int idCounter = 0;
-    Context context;
 
     //Singleton:
     private static UserManager UM = new UserManager();
@@ -43,11 +42,10 @@ public class UserManager {
         //write new created user into file
         final String xmlFile = "users";
         String userid = String.valueOf(userID);
-        context = UserManager.this;
 
         try {
             //FileOutputStream fos = new  FileOutputStream("users.xml");
-            FileOutputStream fileos= context.openFileOutput(xmlFile, Context.MODE_PRIVATE);
+            FileOutputStream fileos= ContextProvider.getContext().openFileOutput(xmlFile, Context.MODE_PRIVATE);
             XmlSerializer xmlSerializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
             xmlSerializer.setOutput(writer);
