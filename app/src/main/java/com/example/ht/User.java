@@ -2,23 +2,23 @@ package com.example.ht;
 
 public class User {
     String username;
-    String userid; //String vai int parempi?
+    int userid;
 
-    public User(String n) {
+    public User(String n, int id) {
         username = n;
-        //userid = id;
+        userid = id;
     }
 
     public String getUsername(){
         return username;
     }
 
-    public String getUserid() {
+    public int getUserid() {
         return userid;
     }
 
-//    @Override
-//    public toString() {
-//
-//    }
+    @Override
+    public String toString() {
+        return username;
+    }
 }
