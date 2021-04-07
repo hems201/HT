@@ -29,6 +29,7 @@ public class MenuActivity extends AppCompatActivity {
         //TripDataSpinner set up
         Spinner tripDataSpinner = findViewById(R.id.tripDataSpinner);
         List<String> trip_data_list = new  ArrayList<>();
+        trip_data_list.add("Select");
         trip_data_list.add("Public Transport");
         trip_data_list.add("Car");
         trip_data_list.add("Flight");
@@ -40,12 +41,16 @@ public class MenuActivity extends AppCompatActivity {
         tripDataSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Fragment frag = new tripDataFragment();
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.fragmentFrame, frag);
-                transaction.commit();
-
+                int pos = tripDataSpinner.getSelectedItemPosition();
+                if (pos >= 0) {
+                    Fragment frag = new tripDataFragment();
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.fragmentFrameMenu, frag);
+                    transaction.commit();
+                } else {
+                    ///nothing?
+                }
             }
 
             @Override
@@ -57,21 +62,29 @@ public class MenuActivity extends AppCompatActivity {
         //AddTripSpinner set up
         Spinner addTripSpinner = findViewById(R.id. addTripSpinner);
         List<String> add_trip_list = new  ArrayList<>();
+        add_trip_list.add("Select transportation method");
         add_trip_list.add("Public Transport");
         add_trip_list.add("Car");
         add_trip_list.add("Flight");
         ArrayAdapter<String> spinnerAdapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,add_trip_list);
         spinnerAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        tripDataSpinner.setAdapter(spinnerAdapter3);
+        addTripSpinner.setAdapter(spinnerAdapter3);
 
         addTripSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Fragment frag = new addTripFragment();
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.fragmentFrame, frag);
-                transaction.commit();
+
+                int pos = addTripSpinner.getSelectedItemPosition();
+
+                if (pos >= 0) {
+                    Fragment frag = new addTripFragment();
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.fragmentFrameMenu, frag);
+                    transaction.commit();
+                } else {
+                    //do nothing?
+                }
 
             }
 
