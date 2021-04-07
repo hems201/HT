@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import com.example.ht.fragments.carEntryFragment;
 import com.example.ht.fragments.flightEntryFragment;
+import com.example.ht.fragments.publicEntryFragment;
 import com.example.ht.fragments.tripDataFragment;
 
 import java.util.ArrayList;
@@ -78,8 +79,7 @@ public class MenuActivity extends AppCompatActivity {
 
                 if (pos >= 1) {
                     if (pos == 1) {
-                        //frag = new publicEntryFragment();
-                        frag = new FullscreenFragment();
+                        frag = new publicEntryFragment();
                         System.out.println("Opening public");
                     }
                     else if (pos == 2) {
