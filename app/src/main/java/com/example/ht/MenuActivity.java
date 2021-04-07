@@ -14,6 +14,9 @@ import android.widget.Spinner;
 
 import com.example.ht.fragments.addTripFragment;
 import com.example.ht.fragments.addUserFragment;
+import com.example.ht.fragments.carEntryFragment;
+import com.example.ht.fragments.flightEntryFragment;
+import com.example.ht.fragments.publicEntryFragment;
 import com.example.ht.fragments.tripDataFragment;
 
 import java.util.ArrayList;
@@ -75,9 +78,18 @@ public class MenuActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 int pos = addTripSpinner.getSelectedItemPosition();
+                Fragment frag = null;
 
-                if (pos >= 0) {
-                    Fragment frag = new addTripFragment();
+                if (pos >= 1) {
+                    if (pos == 1) {
+                        frag = new publicEntryFragment();
+                    }
+                    else if (pos == 2) {
+                        frag = new carEntryFragment();
+                    }
+                    else if (pos == 3) {
+                        frag = new flightEntryFragment();
+                    }
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.replace(R.id.fragmentFrameMenu, frag);

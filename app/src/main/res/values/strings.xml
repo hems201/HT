@@ -12,4 +12,21 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="see_trip_data">See trip data:</string>
     <string name="log_a_new_trip_select_transport_mehtod">Log a new trip \n Select transport mehtod:</string>
+    <string name="add_trip">Add Trip</string>
+    <string name="enter_car_build_year">Enter Car Build Year</string>
+    <string name="enter_d_rive_distance">Enter drive distance</string>
+    <string name="enter_number_of_passengers">Enter number of passengers</string>
+    <string name="add_flights">Add Flights</string>
+    <string name="enter_number_of_flights_in_finland">Enter number of flights in Finland</string>
+    <string name="enter_number_of_flights_in_europe">Enter number of flights in Europe</string>
+    <string name="enter_number_of_flights_from_finland_to_the_canary_islands_or_comparable">Enter number of flights from Finland to the Canary islands or comparable</string>
+    <string name="enter_number_of_flights_from_finland_to_other_continents">Enter number of flights from Finland to other Continents</string>
+    <string name="add_public_transport_trip">Add Public Transport Trip</string>
+    <string name="kilometers_travelled_in_long_distance_bus">Kilometers travelled in long distance bus</string>
+    <string name="kilometers_travelled_in_long_distance_trains">Kilometers travelled in long distance trains</string>
+    <string name="kilometers_travelled_by_metro">Kilometers travelled by metro</string>
+    <string name="kilometers_travelled_by_tram">Kilometers travelled by tram</string>
+    <string name="kilometers_travelled_by_short_distance_bus">Kilometers travelled by short distance bus</string>
+    <string name="kilometers_travelled_by_short_distance_train">Kilometers travelled by short distance train</string>
+    <string name="enter">Enter:</string>
 </resources>
