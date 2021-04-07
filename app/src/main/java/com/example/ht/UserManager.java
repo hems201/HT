@@ -9,6 +9,7 @@ public class UserManager {
     //Singleton:
     private static UserManager UM = new UserManager();
     private UserManager() {
+        
         user_array = new ArrayList<>();
     }
     public static UserManager getInstance() {return UM;}
@@ -19,7 +20,17 @@ public class UserManager {
         User user = new User(name, idCounter);
         user_array.add(user);
 
-        //TODO tiedostoon kirjoitus
+
+        writefile();
+    }
+
+    public void readfile() {
+        //read all users in file as usermanager is created
+        // add them to arraylist
+    }
+
+    public void writefile() {
+        //write new created user into file
     }
 
     public void deleteUser(){}
