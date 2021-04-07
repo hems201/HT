@@ -15,107 +15,110 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
-
-    <EditText
-        android:id="@+id/editLongTrain"
-        android:layout_width="365dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:hint="@string/kilometers_travelled_in_long_distance_trains"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.199"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/editMetro"
-        android:layout_width="244dp"
-        android:layout_height="47dp"
-        android:ems="10"
-        android:hint="@string/kilometers_travelled_by_metro"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/editTram"
-        android:layout_width="261dp"
-        android:layout_height="51dp"
-        android:ems="10"
-        android:hint="@string/kilometers_travelled_by_tram"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.874" />
 
     <EditText
         android:id="@+id/editShortBus"
-        android:layout_width="345dp"
-        android:layout_height="51dp"
+        android:layout_width="184dp"
+        android:layout_height="46dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="@string/kilometers_travelled_by_short_distance_bus"
+        android:hint="@string/short_distance_bus"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.599"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.502" />
 
     <EditText
         android:id="@+id/editLongBus"
-        android:layout_width="357dp"
-        android:layout_height="39dp"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="@string/kilometers_travelled_in_long_distance_bus"
+        android:hint="@string/long_distance_bus"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editLongTrain"
+        android:layout_width="195dp"
+        android:layout_height="50dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/long_distance_trains"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.962"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.681" />
 
     <EditText
         android:id="@+id/editShortTrain"
-        android:layout_width="352dp"
-        android:layout_height="53dp"
+        android:layout_width="178dp"
+        android:layout_height="58dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="@string/kilometers_travelled_by_short_distance_train"
+        android:hint="@string/short_distance_train"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.128"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.734"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.677" />
+
+    <EditText
+        android:id="@+id/editTram"
+        android:layout_width="81dp"
+        android:layout_height="45dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/tram"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.327" />
+
+    <EditText
+        android:id="@+id/editMetro"
+        android:layout_width="82dp"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/metro"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.329" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="81dp"
-        android:layout_height="23dp"
-        android:text="@string/enter"
+        android:layout_width="363dp"
+        android:layout_height="47dp"
+        android:text="@string/enter_number_of_kilometers_travelled_by"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.645"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.131" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

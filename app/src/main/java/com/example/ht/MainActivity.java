@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("User sent from main activity to menu acitivity");
                 startActivity(intent);
             }
-
+            //TODO KORJAA SILLEEN ET SAA VALITA USERIN ENNEN KUN MENUACTIVITY AUKEAA
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 

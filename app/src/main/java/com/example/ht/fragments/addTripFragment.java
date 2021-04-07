@@ -13,6 +13,8 @@ import com.example.ht.R;
 
 public class addTripFragment extends Fragment {
 
+    //USELESS
+
     View view;
 
     @Override
