@@ -44,12 +44,13 @@ public class UserManager {
 
         System.out.println("Created user " + name);
 
+        //update the user file
         writeFile(name, idCounter);
     }
 
-    public void readFile() {
-        //read all users in file as usermanager is created
 
+    public void readFile() {
+        //read all users in file users.xml as UserManager is created
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
@@ -97,7 +98,7 @@ public class UserManager {
     }
 
     public void writeFile(String username, int userID) {
-        //write new created user into file
+        //Write a new created user into file users.xml, write all users
         String userId = String.valueOf(userID);
 
         try {

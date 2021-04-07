@@ -9,14 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
-import com.example.ht.fragments.addTripFragment;
-import com.example.ht.fragments.addUserFragment;
 import com.example.ht.fragments.carEntryFragment;
 import com.example.ht.fragments.flightEntryFragment;
-import com.example.ht.fragments.publicEntryFragment;
 import com.example.ht.fragments.tripDataFragment;
 
 import java.util.ArrayList;
@@ -82,13 +78,17 @@ public class MenuActivity extends AppCompatActivity {
 
                 if (pos >= 1) {
                     if (pos == 1) {
-                        frag = new publicEntryFragment();
+                        //frag = new publicEntryFragment();
+                        frag = new FullscreenFragment();
+                        System.out.println("Opening public");
                     }
                     else if (pos == 2) {
                         frag = new carEntryFragment();
+                        System.out.println("Opening car");
                     }
                     else if (pos == 3) {
                         frag = new flightEntryFragment();
+                        System.out.println("Opening flight");
                     }
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
