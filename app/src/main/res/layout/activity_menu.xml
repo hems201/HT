@@ -59,8 +59,8 @@
 
     <FrameLayout
         android:id="@+id/fragmentFrameMenu"
-        android:layout_width="412dp"
-        android:layout_height="410dp"
+        android:layout_width="414dp"
+        android:layout_height="383dp"
         android:background="#FBFBFB"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"

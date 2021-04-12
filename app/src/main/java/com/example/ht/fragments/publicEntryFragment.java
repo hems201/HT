@@ -32,20 +32,17 @@ public class publicEntryFragment extends Fragment {
         EditText editTram = view.findViewById(R.id.editTram);
         Button addPublicBtn = view.findViewById(R.id.addPublicEntry);
 
-        addPublicBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //get text input contents
-                int  lBus = Integer.parseInt(String.valueOf(editLongBus.getText()));
-                int sBus = Integer.parseInt(String.valueOf(editShortBus.getText()));
-                int lTrain = Integer.parseInt(String.valueOf(editLongTrain.getText()));
-                int sTrain = Integer.parseInt(String.valueOf(editShortTrain.getText()));
-                int tram = Integer.parseInt(String.valueOf(editTram.getText()));
-                int metro = Integer.parseInt(String.valueOf(editMetro.getText()));
+        addPublicBtn.setOnClickListener(v -> {
+            //get text input contents
+            int  lBus = Integer.parseInt(String.valueOf(editLongBus.getText()));
+            int sBus = Integer.parseInt(String.valueOf(editShortBus.getText()));
+            int lTrain = Integer.parseInt(String.valueOf(editLongTrain.getText()));
+            int sTrain = Integer.parseInt(String.valueOf(editShortTrain.getText()));
+            int tram = Integer.parseInt(String.valueOf(editTram.getText()));
+            int metro = Integer.parseInt(String.valueOf(editMetro.getText()));
 
-                //create a new entry and close fragment
-                createPublicEntry(lBus,sBus,lTrain,sTrain,tram,metro);
-            }
+            //create a new entry and close fragment
+            createPublicEntry(lBus,sBus,lTrain,sTrain,tram,metro);
         });
 
 

@@ -33,20 +33,17 @@ public class MainActivity extends AppCompatActivity {
 
         //Log in button set up
 
-        View.OnClickListener lis = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                User user = (User) userSpinner.getSelectedItem();
-                intent.putExtra("username", user);
-                System.out.println("User sent from main activity to menu acitivity");
-                startActivity(intent);
-            }
+        View.OnClickListener lis = v -> {
+            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+            User user = (User) userSpinner.getSelectedItem();
+            intent.putExtra("username", user);
+            System.out.println("User sent from main activity to menu acitivity");
+            startActivity(intent);
         };
         logInBtn.setOnClickListener(lis);
 
         //AddUserBtn set up
-        View.OnClickListener listener = view -> {
+        View.OnClickListener listener = v -> {
             Fragment frag = new addUserFragment();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();

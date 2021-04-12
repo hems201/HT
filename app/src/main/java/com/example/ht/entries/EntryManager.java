@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class EntryManager {
     //similar structure to UserManager
     //different lists for different types of entries?
+    Integer entryID = 0;
 
     private ArrayList<Entry> entryArray;
 
@@ -30,6 +31,7 @@ public class EntryManager {
     }
 
     public void addEntry() {
+        entryID++;
         //save new entry to entryArray
         // takes either travelValues ArrayList or individual integers
     }
