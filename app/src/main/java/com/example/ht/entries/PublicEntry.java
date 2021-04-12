@@ -43,26 +43,24 @@ public class PublicEntry extends Entry{
         readXML(url);
     }
 
+    @Override
     public void readXML(String url) {
+        //parse the emission values from the response document
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
             // get response document
-            Document doc1 = builder.parse(url);
+            Document doc = builder.parse(url);
 
-            System.out.println(doc1.getDocumentElement().getNodeName());
+            System.out.println(doc.getDocumentElement().getNodeName());
 
-            busCO = Integer.parseInt(doc1.getDocumentElement().getAttributeNode("Bus").getValue());
-            trainCO = Integer.parseInt(doc1.getDocumentElement().getAttributeNode("Train").getValue());
-            totalCO = Integer.parseInt(doc1.getDocumentElement().getAttributeNode("Total").getValue());
+            busCO = Integer.parseInt(doc.getDocumentElement().getElementsByTagName("Bus").item(0).getTextContent());
+            trainCO = Integer.parseInt(doc.getDocumentElement().getElementsByTagName("Train").item(0).getTextContent());
+            totalCO = Integer.parseInt(doc.getDocumentElement().getElementsByTagName("Total").item(0).getTextContent());
 
             System.out.println(busCO + ", " + trainCO + ", " + totalCO);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
+        } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
