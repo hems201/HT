@@ -27,4 +27,9 @@ public class CarEntry extends Entry {
         //"https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/CarEstimate?query.buildYear=2010&query.driveDistance=10&query.size=mini&query.passengerCount=2"
     }
 
+    @Override
+    public void readXML(String url) {
+
+    }
+
 }

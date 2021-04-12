@@ -4,14 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-
 import com.example.ht.R;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class tripDataFragment extends Fragment {
 
@@ -21,7 +22,7 @@ public class tripDataFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_trip_data, container, false);
 
-        //makeGraph(view);
+        makeGraph(view);
 
         return view;
     }
@@ -31,26 +32,17 @@ public class tripDataFragment extends Fragment {
 
     }
 
-//    public void makeGraph(View view) {
-//        // init example series data
-//        GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
-//                new GraphViewData(1, 2.0d)
-//                , new GraphViewData(2, 1.5d)
-//                , new GraphViewData(3, 2.5d)
-//                , new GraphViewData(4, 1.0d)
-//        });
-//
-//        LineGraphView graphView = new LineGraphView(
-//                getActivity() // context
-//                , "GraphViewDemo" // heading
-//        );
-//        graphView.addSeries(exampleSeries); // data
-//
-//        try {
-//            LinearLayout layout = (LinearLayout) view.findViewById(R.id.graph);
-//            layout.addView(graphView);
-//        } catch (NullPointerException e) {
-//            // something to handle the NPE.
-//        }
-//    }
+    public void makeGraph(View view) {
+
+        GraphView graph = view.findViewById(R.id.line_graph);
+
+        LineGraphSeries<DataPoint> lineSeries = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 2),
+                new DataPoint(4, 6)
+        });
+        graph.addSeries(lineSeries);
+    }
 }
