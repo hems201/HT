@@ -56,7 +56,7 @@ public class publicEntryFragment extends Fragment {
     public void createPublicEntry(int lBus,int sBus, int lTrain,int sTrain,int tram,int metro) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
         EntryManager EM = EntryManager.getInstance();
-        //EM.addEntry();
+        EM.addEntry();
         startActivity(intent);
     }
 }

@@ -32,4 +32,9 @@ public class FlightEntry extends Entry{
 
         // response -> save totalCO
     }
+
+    @Override
+    public void readXML(String url) {
+
+    }
 }
