@@ -34,6 +34,8 @@
         android:layout_height="46dp"
         android:text="@string/select_user"
         android:textAlignment="center"
+        android:textColor="#0C0C0C"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +44,7 @@
 
     <FrameLayout
         android:id="@+id/fragmentFrame"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="274dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

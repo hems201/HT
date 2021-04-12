@@ -1,15 +1,15 @@
 package com.example.ht;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ht.fragments.carEntryFragment;
 import com.example.ht.fragments.flightEntryFragment;
@@ -42,14 +42,12 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int pos = tripDataSpinner.getSelectedItemPosition();
-                if (pos >= 0) {
+                if (pos > 0) {
                     Fragment frag = new tripDataFragment();
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.replace(R.id.fragmentFrameMenu, frag);
                     transaction.commit();
-                } else {
-                    ///nothing?
                 }
             }
 
@@ -90,30 +88,25 @@ public class MenuActivity extends AppCompatActivity {
                         frag = new flightEntryFragment();
                         System.out.println("Opening flight");
                     }
+
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
+                    assert frag != null;
                     transaction.replace(R.id.fragmentFrameMenu, frag);
                     transaction.commit();
-                } else {
-                    //do nothing?
                 }
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
-
     }
 
         @Override
     public void onStart() {
         super.onStart();
-        User user;
-        user = (User) getIntent().getSerializableExtra("user");
+        User user = (User) getIntent().getSerializableExtra("user");
         System.out.println("user mainactivitysta");
     }
 }
