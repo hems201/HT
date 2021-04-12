@@ -15,15 +15,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class PublicEntry extends Entry{
-    Integer trainkm, buskm;
-    String entryID;
+    int sTrainkm, sBuskm, lTrainkm, lBuskm, metrokm, tramkm, entryID;
     Date date;
     Integer totalCO, busCO, trainCO;
 
-    public PublicEntry(String x, Integer a, Integer b) {
-        entryID = x;
-        trainkm = a;
-        buskm = b;
+    public PublicEntry(int id, int st, int sb, int lt, int lb, int m, int t) {
+        entryID = id;
+        tramkm = t;
+        lBuskm = lb;
+        sBuskm = sb;
+        sTrainkm = st;
+        lTrainkm = lt;
+        metrokm = m;
 
         date = Calendar.getInstance().getTime();
     }
