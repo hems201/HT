@@ -24,26 +24,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button addUserBtn = findViewById(R.id.addUserBtn);
+        Button logInBtn = findViewById(R.id.logInBtn);
+        Spinner userSpinner = findViewById(R.id.userSpinner);
+
         //Initialize singleton UserManager
         UserManager UM = UserManager.getInstance();
 
+        //Log in button set up
+
+        View.OnClickListener lis = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                User user = (User) userSpinner.getSelectedItem();
+                intent.putExtra("username", user);
+                System.out.println("User sent from main activity to menu acitivity");
+                startActivity(intent);
+            }
+        };
+        logInBtn.setOnClickListener(lis);
 
         //AddUserBtn set up
-        Button addUserBtn = findViewById(R.id.addUserBtn);
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment frag = new addUserFragment();
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.fragmentFrame, frag);
-                transaction.commit();
-            }
+        View.OnClickListener listener = view -> {
+            Fragment frag = new addUserFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.fragmentFrame, frag);
+            transaction.commit();
         };
         addUserBtn.setOnClickListener(listener);
 
         //UserSpinner set up
-        Spinner userSpinner = findViewById(R.id.userSpinner);
         List<User> user_array = UM.getUser_array();
         ArrayAdapter<User> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, user_array);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -52,13 +64,8 @@ public class MainActivity extends AppCompatActivity {
         userSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                User user = (User) userSpinner.getSelectedItem();
-                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                intent.putExtra("username", user);
-                System.out.println("User sent from main activity to menu acitivity");
-                startActivity(intent);
+                //User user = (User) userSpinner.getSelectedItem();
             }
-            //TODO KORJAA SILLEEN ET SAA VALITA USERIN ENNEN KUN MENUACTIVITY AUKEAA
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 

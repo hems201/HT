@@ -31,4 +31,5 @@
     <string name="enter">Enter:</string>
     <string name="enter_number_of_flights">Enter number of flights:</string>
     <string name="enter_number_of_kilometers_travelled_by">Enter number of kilometers travelled by:</string>
+    <string name="log_in">Log in</string>
 </resources>
