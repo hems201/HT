@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,21 +28,37 @@ public class PublicEntry extends Entry{
     Integer entryID;
     Date date;
 
-    public PublicEntry(ArrayList<Integer> travelValues, Integer id) {
-
+    public PublicEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, ArrayList<Double> coList) {
         // open travelValues
-
         entryID = id;
-        lBus = travelValues.get(0);
-        sBus = travelValues.get(1);
-        lTrain = travelValues.get(2);
-        sTrain = travelValues.get(3);
-        tram = travelValues.get(4);
-        metro = travelValues.get(5);
+        lBus = travelValues.get(0); sBus = travelValues.get(1);
+        lTrain = travelValues.get(2); sTrain = travelValues.get(3);
+        tram = travelValues.get(4); metro = travelValues.get(5);
 
-        date = Calendar.getInstance().getTime();
-        countTotalCO();
+        try {
+            date = new SimpleDateFormat("dd.MM.yyyy").parse(oldDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // see if CO are already included
+        if (coList.size()!=0) {
+            totalCO = coList.get(0); busCO = coList.get(1);
+            trainCO = coList.get(2); otherCO = coList.get(3);
+        } else {
+            countTotalCO();
+        }
     }
+
+    public Integer getlBus(){return lBus;}
+    public Integer getsBus(){return sBus;}
+    public Integer getlTrain(){return lTrain;}
+    public Integer getsTrain(){return sTrain;}
+    public Integer getTram(){return tram;}
+    public Integer getMetro(){return metro;}
+    public Double getBusCO(){return busCO;}
+    public Double getOtherCO() {return otherCO;}
+    public Double getTrainCO() {return trainCO;}
 
     @Override
     public void countTotalCO() {

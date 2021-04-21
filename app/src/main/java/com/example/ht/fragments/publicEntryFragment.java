@@ -17,7 +17,9 @@ import com.example.ht.R;
 import com.example.ht.User;
 import com.example.ht.entries.EntryManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class publicEntryFragment extends Fragment {
     View view;
@@ -72,7 +74,9 @@ public class publicEntryFragment extends Fragment {
 
         // get the user's entry manager
         EntryManager EM = user.getEM();
-        EM.addEntry(3, travelValues);
+        SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
+        EM.addEntry(3, travelValues, 0, sdf.format(Calendar.getInstance().getTime()), null);
+
 
         startActivity(intent);
     }

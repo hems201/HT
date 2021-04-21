@@ -1,19 +1,23 @@
 package com.example.ht.entries;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Entry {
-    String entryID;
+    Integer entryID;
     Date date;
-    Integer totalCO;
+    Double totalCO;
 
 
-    public String getEntryID() { return entryID; }
+    public Integer getEntryID() { return entryID; }
 
-    public Date getInfo() { return date; }
+    public String getDate() {
+        SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
+        String x = sdf.format(date);
+        return x; }
 
-    public Integer getTotalCO() { return totalCO; }
+    public Double getTotalCO() { return totalCO; }
 
     public abstract void countTotalCO();
     public abstract void readXML(String url);

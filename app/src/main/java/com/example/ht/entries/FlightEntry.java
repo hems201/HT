@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,7 +25,7 @@ public class FlightEntry extends Entry{
     Integer entryID;
     Date date;
 
-    public FlightEntry(ArrayList<Integer> travelValues, Integer id) {
+    public FlightEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, Double co) {
         //open travelValues
 
         entryID = id;
@@ -32,10 +34,24 @@ public class FlightEntry extends Entry{
         planeCa = travelValues.get(2);
         planeTra = travelValues.get(3);
 
-        date = Calendar.getInstance().getTime();
+        try {
+            date = new SimpleDateFormat("dd.MM.yyyy").parse(oldDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        countTotalCO();
+        // see if CO are already included
+        if (co!=null) {
+            totalCO = co;
+        } else {
+            countTotalCO();
+        }
     }
+
+    public Integer getPlaneFin(){return planeFin;}
+    public Integer getPlaneEu(){return planeEu;}
+    public Integer getPlaneCa(){return planeCa;}
+    public Integer getPlaneTra(){return planeTra;}
 
     @Override
     public void countTotalCO() {

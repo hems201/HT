@@ -39,7 +39,7 @@ public class UserManager {
 
     public void addUser(String name) {
         idCounter ++;
-        User user = new User(name, idCounter);
+        User user = new User(name, idCounter, null);
         user_array.add(user);
 
         System.out.println("Created user " + name);
@@ -86,10 +86,10 @@ public class UserManager {
                 Element element = (Element) node;
                 System.out.println("getting tags");
 
-
                 user_array.add(new User(
                         element.getElementsByTagName("userName").item(0).getTextContent(),
-                        Integer.parseInt(element.getElementsByTagName("userId").item(0).getTextContent())
+                        Integer.parseInt(element.getElementsByTagName("userId").item(0).getTextContent()),
+                        element.getElementsByTagName("EntryManager")
                 ));
                 //keep count of users in the file
                 idCounter++;
@@ -123,6 +123,11 @@ public class UserManager {
                 xmlSerializer.text(String.valueOf(i));
                 xmlSerializer.endTag(null, "userId");
 
+                xmlSerializer.startTag(null, "entryManager");
+                    //call user's entry manager to write entries to file
+                    user_array.get(i-1).getEM().writeFile(xmlSerializer);
+                xmlSerializer.endTag(null, "entryManager");
+
                 xmlSerializer.endTag(null, "user");
                 System.out.println("added old user " +  user_array.get(i).username);
             }
@@ -137,6 +142,10 @@ public class UserManager {
             xmlSerializer.startTag(null, "userId");
             xmlSerializer.text(userId);
             xmlSerializer.endTag(null, "userId");
+
+            xmlSerializer.startTag(null, "entryManager");
+            //no entries for new users yet
+            xmlSerializer.endTag(null, "entryManager");
 
             xmlSerializer.endTag(null, "user");
 

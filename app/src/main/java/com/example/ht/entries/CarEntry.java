@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,7 +25,7 @@ public class CarEntry extends Entry {
     Double totalCO;
     Date date;
 
-    public CarEntry(ArrayList<Integer> travelValues, Integer id) {
+    public CarEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, Double co) {
         //open travelValues
 
         entryID = id;
@@ -31,9 +33,18 @@ public class CarEntry extends Entry {
         carYear = travelValues.get(1);
         passengers = travelValues.get(2);
 
-        date = Calendar.getInstance().getTime();
+        try {
+            date = new SimpleDateFormat("dd.MM.yyyy").parse(oldDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        countTotalCO();
+        // see if CO are already included
+        if (co!=null) {
+            totalCO = co;
+        } else {
+            countTotalCO();
+        }
     }
 
     @Override
@@ -89,4 +100,7 @@ public class CarEntry extends Entry {
         }
     }
 
+    public Integer getKm(){return km;}
+    public Integer getCarYear(){return carYear;}
+    public Integer getPassengers(){return passengers;}
 }
