@@ -16,6 +16,8 @@ import com.example.ht.MenuActivity;
 import com.example.ht.R;
 import com.example.ht.entries.EntryManager;
 
+import java.util.ArrayList;
+
 public class publicEntryFragment extends Fragment {
     View view;
 
@@ -34,12 +36,12 @@ public class publicEntryFragment extends Fragment {
 
         addPublicBtn.setOnClickListener(v -> {
             //get text input contents
-            int  lBus = Integer.parseInt(String.valueOf(editLongBus.getText()));
-            int sBus = Integer.parseInt(String.valueOf(editShortBus.getText()));
-            int lTrain = Integer.parseInt(String.valueOf(editLongTrain.getText()));
-            int sTrain = Integer.parseInt(String.valueOf(editShortTrain.getText()));
-            int tram = Integer.parseInt(String.valueOf(editTram.getText()));
-            int metro = Integer.parseInt(String.valueOf(editMetro.getText()));
+            Integer  lBus = Integer.parseInt(String.valueOf(editLongBus.getText()));
+            Integer sBus = Integer.parseInt(String.valueOf(editShortBus.getText()));
+            Integer lTrain = Integer.parseInt(String.valueOf(editLongTrain.getText()));
+            Integer sTrain = Integer.parseInt(String.valueOf(editShortTrain.getText()));
+            Integer tram = Integer.parseInt(String.valueOf(editTram.getText()));
+            Integer metro = Integer.parseInt(String.valueOf(editMetro.getText()));
 
             //create a new entry and close fragment
             createPublicEntry(lBus,sBus,lTrain,sTrain,tram,metro);
@@ -53,10 +55,20 @@ public class publicEntryFragment extends Fragment {
         System.out.println("public entry view created\n");
 
     }
-    public void createPublicEntry(int lBus,int sBus, int lTrain,int sTrain,int tram,int metro) {
+    public void createPublicEntry(Integer lBus,Integer sBus, Integer lTrain,Integer sTrain,Integer tram,Integer metro) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
         EntryManager EM = EntryManager.getInstance();
-        EM.addEntry();
+
+        // add relevant values to list
+        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        travelValues.add(lBus);
+        travelValues.add(sBus);
+        travelValues.add(lTrain);
+        travelValues.add(sTrain);
+        travelValues.add(tram);
+        travelValues.add(metro);
+
+        EM.addEntry(3, travelValues);
         startActivity(intent);
     }
 }

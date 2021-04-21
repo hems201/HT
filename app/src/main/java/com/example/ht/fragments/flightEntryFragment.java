@@ -18,6 +18,8 @@ import com.example.ht.R;
 import com.example.ht.UserManager;
 import com.example.ht.entries.EntryManager;
 
+import java.util.ArrayList;
+
 public class flightEntryFragment extends Fragment {
     View view;
 
@@ -36,10 +38,10 @@ public class flightEntryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //get text input contents
-                int planeFin = Integer.parseInt(String.valueOf(editFlightsFin.getText()));
-                int planeEu = Integer.parseInt(String.valueOf(editFlightsEu.getText()));
-                int planeCa = Integer.parseInt(String.valueOf(editFlightsCanary.getText()));
-                int planeTra = Integer.parseInt(String.valueOf(editFlightsCont.getText()));
+                Integer planeFin = Integer.parseInt(String.valueOf(editFlightsFin.getText()));
+                Integer planeEu = Integer.parseInt(String.valueOf(editFlightsEu.getText()));
+                Integer planeCa = Integer.parseInt(String.valueOf(editFlightsCanary.getText()));
+                Integer planeTra = Integer.parseInt(String.valueOf(editFlightsCont.getText()));
 
                 //create a new entry and close fragment
                 createFlightEntry(planeFin, planeEu, planeCa, planeTra);
@@ -55,10 +57,18 @@ public class flightEntryFragment extends Fragment {
 
     }
 
-    public void createFlightEntry(int fFin, int FEu, int FCan, int FTra) {
+    public void createFlightEntry(Integer fFin, Integer FEu, Integer FCan, Integer FTra) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
         EntryManager EM = EntryManager.getInstance();
-        //EM.addEntry(fFin, FEu, FCan, FTra));
+
+        // add relevant values to list
+        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        travelValues.add(fFin);
+        travelValues.add(FEu);
+        travelValues.add(FCan);
+        travelValues.add(FTra);
+
+        EM.addEntry(2, travelValues);
         startActivity(intent);
     }
 

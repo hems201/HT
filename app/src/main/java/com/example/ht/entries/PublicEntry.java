@@ -21,30 +21,39 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class PublicEntry extends Entry{
-    Double trainkm, buskm;
-    String entryID;
+    Integer lBus, sBus, lTrain,sTrain, tram, metro;
+    Double busCO, trainCO, otherCO, totalCO;
+    Integer entryID;
     Date date;
-    Double totalCO, busCO, trainCO;
 
-    public PublicEntry(String x, Double a, Double b) {
-        entryID = x;
-        trainkm = a;
-        buskm = b;
+    public PublicEntry(ArrayList<Integer> travelValues, Integer id) {
+
+        // open travelValues
+
+        entryID = id;
+        lBus = travelValues.get(0);
+        sBus = travelValues.get(1);
+        lTrain = travelValues.get(2);
+        sTrain = travelValues.get(3);
+        tram = travelValues.get(4);
+        metro = travelValues.get(5);
 
         date = Calendar.getInstance().getTime();
-        countTotalCO(null);
+        countTotalCO();
     }
 
     @Override
-    public void countTotalCO(ArrayList<Integer> travelValues) {
+    public void countTotalCO() {
         //make request url from values
         // url example https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/PublicTransportEstimate?longDistanceBusYear=20&longDistanceTrainYear=20&metroweek=0&tramWeek=0&cityBusWeek=0&cityTrainWeek=0
 
-        String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/PublicTransportEstimate?";
-
-        //TODO open travelvalues and add to url
-
-        url = url + "longDistanceBusYear=" + 20 + "&longDistanceTrainYear=" + 20 + "&metroweek=0&tramWeek=0&cityBusWeek=0&cityTrainWeek=0";
+        String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/PublicTransportEstimate?"
+                + "longDistanceBusYear=" + (int) lBus
+                + "&longDistanceTrainYear=" + lTrain
+                + "&metroweek=" +  metro
+                + "&tramWeek=" + tram
+                + "&cityBusWeek=" + sBus
+                + "&cityTrainWeek=" + sTrain;
 
         // send request
         readXML(url);
@@ -83,9 +92,10 @@ public class PublicEntry extends Entry{
 
             busCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Bus").item(0).getTextContent());
             trainCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Train").item(0).getTextContent());
+            otherCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Other").item(0).getTextContent());
             totalCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Total").item(0).getTextContent());
 
-            System.out.println(busCO + ", " + trainCO + ", " + totalCO);
+            System.out.println(busCO + ", " + trainCO + ", " + otherCO + ", "+ totalCO);
 
         } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();

@@ -16,6 +16,8 @@ import com.example.ht.MenuActivity;
 import com.example.ht.R;
 import com.example.ht.entries.EntryManager;
 
+import java.util.ArrayList;
+
 public class carEntryFragment extends Fragment {
 
     View view;
@@ -34,9 +36,9 @@ public class carEntryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //get text input contents
-                int km = Integer.parseInt(String.valueOf(editDriveDist.getText()));
-                int carYear = Integer.parseInt(String.valueOf(editCarYear.getText()));
-                int passengers = Integer.parseInt(String.valueOf(editPassengers.getText()));
+                Integer km = Integer.parseInt(String.valueOf(editDriveDist.getText()));
+                Integer carYear = Integer.parseInt(String.valueOf(editCarYear.getText()));
+                Integer passengers = Integer.parseInt(String.valueOf(editPassengers.getText()));
 
                 //create a new entry and close fragment
                 createCarEntry(km, carYear, passengers);
@@ -51,10 +53,17 @@ public class carEntryFragment extends Fragment {
         System.out.println("car entry view created\n");
 
     }
-    public void createCarEntry(int km, int carYear, int passengers) {
+    public void createCarEntry(Integer km, Integer carYear, Integer passengers) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
         EntryManager EM = EntryManager.getInstance();
-        //EM.addEntry();
+
+        // add relevant values to list
+        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        travelValues.add(km);
+        travelValues.add(carYear);
+        travelValues.add(passengers);
+
+        EM.addEntry(1, travelValues);
         startActivity(intent);
     }
 }
