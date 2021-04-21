@@ -12,10 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.ht.MainActivity;
 import com.example.ht.MenuActivity;
 import com.example.ht.R;
 import com.example.ht.User;
+import com.example.ht.UserManager;
 import com.example.ht.entries.EntryManager;
+
+import java.util.ArrayList;
 
 public class flightEntryFragment extends Fragment {
     View view;
@@ -59,7 +63,14 @@ public class flightEntryFragment extends Fragment {
     public void createFlightEntry(int fFin, int FEu, int FCan, int FTra, User user) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
         EntryManager EM = user.getEM();
-        //EM.addEntry(fFin, FEu, FCan, FTra));
+        // add relevant values to list
+        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        travelValues.add(fFin);
+        travelValues.add(FEu);
+        travelValues.add(FCan);
+        travelValues.add(FTra);
+
+        EM.addEntry(2, travelValues);
         startActivity(intent);
     }
 

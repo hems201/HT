@@ -1,40 +1,94 @@
 package com.example.ht.entries;
 
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 public class FlightEntry extends Entry{
     Integer planeFin, planeEu, planeCa, planeTra;
-    String entryID;
+    Double totalCO;
+    Integer entryID;
     Date date;
-    Integer totalCO;
 
-    public FlightEntry(String x,Integer a, Integer b, Integer c, Integer d) {
-        entryID = x;
-        planeFin = a;
-        planeEu = b;
-        planeCa = c;
-        planeTra = d;
+    public FlightEntry(ArrayList<Integer> travelValues, Integer id) {
+        //open travelValues
+
+        entryID = id;
+        planeFin = travelValues.get(0);
+        planeEu = travelValues.get(1);
+        planeCa = travelValues.get(2);
+        planeTra = travelValues.get(3);
 
         date = Calendar.getInstance().getTime();
+
+        countTotalCO();
     }
 
     @Override
-    public void countTotalCO(ArrayList<Integer> travelValues) {
+    public void countTotalCO() {
         //send request to ilmastodieetti to calculate CO2
         //url example https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/FlightEstimate?finland=2&europe=0&canary=0&transcontinental=0
 
-        String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/FlightEstimate?";
-        //open travelvalues and add to url
+        String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/FlightEstimate?"
+                + "finland=" + planeFin
+                + "&europe=" + planeEu
+                + "&canary=" + planeCa
+                + "&transcontinental=" + planeTra;
 
         // send request
-
-        // response -> save totalCO
+        readXML(url);
     }
 
     @Override
     public void readXML(String url) {
+        //send request to ilmastodieetti to calculate CO2
+        //parse the emission values from the response document
+        try {
+            // https://chillyfacts.com/java-send-url-http-request-read-xml-response/
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
+            con.setRequestProperty("content-type", "application/xml; charset=utf-8");
+
+            int responseCode = con.getResponseCode();
+            System.out.println(responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            con.disconnect();
+
+            // fix encoding
+            String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
+
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                    .parse(new InputSource(new StringReader(responseString)));
+
+            System.out.println(doc.getDocumentElement().getNodeName());
+
+            totalCO = Double.parseDouble(doc.getDocumentElement().getTextContent());
+
+            System.out.println("totalCO: " + totalCO);
+
+        } catch (IOException | SAXException | ParserConfigurationException e) {
+            e.printStackTrace();
+        }
     }
 }

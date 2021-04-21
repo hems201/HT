@@ -7,6 +7,10 @@ public class EntryManager {
     //different lists for different types of entries?
 
     private ArrayList<PublicEntry> publicEntryArray;
+    private ArrayList<FlightEntry> flightEntryArray;
+    private ArrayList<CarEntry> carEntryArray;
+
+    private int idCounter = 0;
 
     //singleton
     private static EntryManager entryManager = new EntryManager();
@@ -16,6 +20,8 @@ public class EntryManager {
 
     public EntryManager() {
         publicEntryArray = new ArrayList<PublicEntry>();
+        flightEntryArray = new ArrayList<FlightEntry>();
+        carEntryArray = new ArrayList<CarEntry>();
 
     }
 
@@ -29,11 +35,19 @@ public class EntryManager {
         //search and return a specific entry
     }
 
-    public void addEntry() {
-        //save new entry to entryArray
-        // takes either travelValues ArrayList or individual integers
-        publicEntryArray.add(new PublicEntry("0", 0.0,0.0));
+    public void addEntry(int travelType, ArrayList<Integer> travelValues) {
+        //save new entry to correct entryArray
+        // takes travelValues ArrayList
+        idCounter++;
 
+        if (travelType == 1) {
+            System.out.println("adding car entry");
+            carEntryArray.add(new CarEntry(travelValues, idCounter));
+        } else if (travelType == 2) {
+            flightEntryArray.add(new FlightEntry(travelValues, idCounter));
+        } else if (travelType == 3) {
+            publicEntryArray.add(new PublicEntry(travelValues, idCounter));
+        }
     }
 
     public void deleteEntry(String entryID) {

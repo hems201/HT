@@ -15,7 +15,7 @@ public abstract class Entry {
 
     public Integer getTotalCO() { return totalCO; }
 
-    public abstract void countTotalCO(ArrayList<Integer> travelValues);
+    public abstract void countTotalCO();
     public abstract void readXML(String url);
 
 }

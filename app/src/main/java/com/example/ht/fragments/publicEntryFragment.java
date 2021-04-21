@@ -17,6 +17,8 @@ import com.example.ht.R;
 import com.example.ht.User;
 import com.example.ht.entries.EntryManager;
 
+import java.util.ArrayList;
+
 public class publicEntryFragment extends Fragment {
     View view;
 
@@ -58,7 +60,17 @@ public class publicEntryFragment extends Fragment {
     }
     public void createPublicEntry(int lBus,int sBus, int lTrain,int sTrain,int tram,int metro, User user) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
+        // add relevant values to list
         EntryManager EM = user.getEM();
+        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        travelValues.add(lBus);
+        travelValues.add(sBus);
+        travelValues.add(lTrain);
+        travelValues.add(sTrain);
+        travelValues.add(tram);
+        travelValues.add(metro);
+
+        EM.addEntry(3, travelValues);
         EM.addEntry();
         startActivity(intent);
     }
