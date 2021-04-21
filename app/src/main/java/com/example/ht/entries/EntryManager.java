@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class EntryManager implements Serializable {
     //similar structure to UserManager
-    //different lists for different types of entries?
+    //different lists for different types of entries
 
     private ArrayList<PublicEntry> publicEntryArray;
     private ArrayList<FlightEntry> flightEntryArray;
@@ -50,8 +50,10 @@ public class EntryManager implements Serializable {
             System.out.println("adding car entry");
             carEntryArray.add(new CarEntry(travelValues, idCounter));
         } else if (travelType == 2) {
+            System.out.println("adding flight entry");
             flightEntryArray.add(new FlightEntry(travelValues, idCounter));
         } else if (travelType == 3) {
+            System.out.println("adding public entry");
             publicEntryArray.add(new PublicEntry(travelValues, idCounter));
         }
     }
