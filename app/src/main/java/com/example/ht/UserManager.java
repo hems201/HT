@@ -116,7 +116,7 @@ public class UserManager {
                 xmlSerializer.startTag(null, "user");
 
                 xmlSerializer.startTag(null, "userName");
-                xmlSerializer.text(user_array.get(i).username);
+                xmlSerializer.text(user_array.get(i-1).username);
                 xmlSerializer.endTag(null, "userName");
 
                 xmlSerializer.startTag(null, "userId");
