@@ -1,9 +1,12 @@
 package com.example.ht.entries;
 
 import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+public abstract class Entry implements Serializable {
+    String entryID;
 public abstract class Entry {
     Integer entryID;
     Date date;

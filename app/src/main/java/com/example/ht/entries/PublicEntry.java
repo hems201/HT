@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,7 +23,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class PublicEntry extends Entry{
+public class PublicEntry extends Entry implements Serializable {
     Integer lBus, sBus, lTrain,sTrain, tram, metro;
     Double busCO, trainCO, otherCO, totalCO;
     Integer entryID;
@@ -48,6 +49,15 @@ public class PublicEntry extends Entry{
         } else {
             countTotalCO();
         }
+    }
+    public double getBusCO() {return busCO;};
+
+    public Double getTrainCO() {
+        return trainCO;
+    }
+
+    public Double getOtherCO() {
+        return otherCO;
     }
 
     public Integer getlBus(){return lBus;}

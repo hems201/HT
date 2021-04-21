@@ -7,6 +7,7 @@ import org.xml.sax.SAXException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,7 +20,7 @@ import java.util.Date;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class CarEntry extends Entry {
+public class CarEntry extends Entry implements Serializable{
     Integer entryID;
     Integer km, carYear, passengers;
     Double totalCO;
@@ -38,6 +39,7 @@ public class CarEntry extends Entry {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println(date);
 
         // see if CO are already included
         if (co!=null) {

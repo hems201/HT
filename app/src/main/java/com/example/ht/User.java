@@ -12,12 +12,14 @@ import java.util.ArrayList;
 public class User implements Serializable {
     String username;
     int userid;
-    EntryManager EM;
+    private static EntryManager EM;
 
     public User(String n, int id, NodeList managerData) {
+        System.out.println("USER CREATED");
         username = n;
         userid = id;
         EM = new EntryManager();
+        System.out.println("EM CREATED");
 
         if (managerData!=null) {
             //parse managerData to EM
@@ -118,9 +120,6 @@ public class User implements Serializable {
                     }
                 }
             }
-
-
-
         }
     }
 
@@ -132,7 +131,9 @@ public class User implements Serializable {
         return userid;
     }
 
-    public EntryManager getEM() {return EM;}
+    public static EntryManager getEM() {
+        System.out.println("EM RETURNED");
+        return EM;}
 
     @Override
     public String toString() {
