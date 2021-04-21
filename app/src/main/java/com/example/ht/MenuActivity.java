@@ -47,6 +47,7 @@ public class MenuActivity extends AppCompatActivity {
                     Fragment frag = new tripDataFragment();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", user);
+                    bundle.putInt("position",pos);
                     frag.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();

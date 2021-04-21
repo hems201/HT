@@ -7,12 +7,14 @@ import java.io.Serializable;
 public class User implements Serializable {
     String username;
     int userid;
-    EntryManager EM;
+    private static EntryManager EM;
 
     public User(String n, int id) {
+        System.out.println("USER CREATED");
         username = n;
         userid = id;
         EM = new EntryManager();
+        System.out.println("EM CREATED");
     }
 
     public String getUsername(){
@@ -23,7 +25,9 @@ public class User implements Serializable {
         return userid;
     }
 
-    public EntryManager getEM() {return EM;}
+    public static EntryManager getEM() {
+        System.out.println("EM RETURNED");
+        return EM;}
 
     @Override
     public String toString() {

@@ -71,7 +71,6 @@ public class publicEntryFragment extends Fragment {
         travelValues.add(metro);
 
         EM.addEntry(3, travelValues);
-        EM.addEntry();
         startActivity(intent);
     }
 }

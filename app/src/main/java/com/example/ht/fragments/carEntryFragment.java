@@ -44,8 +44,6 @@ public class carEntryFragment extends Fragment {
             //create a new entry and close fragment
             createCarEntry(km, carYear, passengers, user);
         });
-
-
         return view;
     }
 
@@ -57,7 +55,7 @@ public class carEntryFragment extends Fragment {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
         // add relevant values to list
         EntryManager EM = user.getEM();
-        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        ArrayList<Integer> travelValues = new ArrayList<>();
         travelValues.add(km);
         travelValues.add(carYear);
         travelValues.add(passengers);

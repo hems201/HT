@@ -1,8 +1,9 @@
 package com.example.ht.entries;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class EntryManager {
+public class EntryManager implements Serializable {
     //similar structure to UserManager
     //different lists for different types of entries?
 
@@ -11,12 +12,6 @@ public class EntryManager {
     private ArrayList<CarEntry> carEntryArray;
 
     private int idCounter = 0;
-
-    //singleton
-    private static EntryManager entryManager = new EntryManager();
-    public static EntryManager getInstance() {
-        return entryManager;
-    }
 
     public EntryManager() {
         publicEntryArray = new ArrayList<PublicEntry>();
@@ -32,7 +27,18 @@ public class EntryManager {
     }
 
     public void getEntry(String entryID) {
-        //search and return a specific entry
+        //
+    }
+    public ArrayList<PublicEntry> getPublicArray() {
+        return publicEntryArray;
+    }
+
+    public ArrayList<CarEntry> getCarEntryArray() {
+        return carEntryArray;
+    }
+
+    public ArrayList<FlightEntry> getFlightEntryArray() {
+        return flightEntryArray;
     }
 
     public void addEntry(int travelType, ArrayList<Integer> travelValues) {
