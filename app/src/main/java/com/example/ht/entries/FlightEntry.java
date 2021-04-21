@@ -39,15 +39,13 @@ public class FlightEntry extends Entry{
 
     @Override
     public void countTotalCO() {
-        //send request to ilmastodieetti to calculate CO2
-        //url example https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/FlightEstimate?finland=2&europe=0&canary=0&transcontinental=0
-
+        // make request url
         String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/FlightEstimate?"
                 + "finland=" + planeFin
                 + "&europe=" + planeEu
                 + "&canary=" + planeCa
                 + "&transcontinental=" + planeTra;
-
+        System.out.println(url);
         // send request
         readXML(url);
     }

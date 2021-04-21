@@ -55,13 +55,15 @@ public class carEntryFragment extends Fragment {
     }
     public void createCarEntry(int km, int carYear, int passengers, User user) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
+
         // add relevant values to list
-        EntryManager EM = user.getEM();
         ArrayList<Integer> travelValues = new ArrayList<Integer>();
         travelValues.add(km);
         travelValues.add(carYear);
         travelValues.add(passengers);
 
+        // get the user's entry manager
+        EntryManager EM = user.getEM();
         EM.addEntry(1, travelValues);
 
         startActivity(intent);

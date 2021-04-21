@@ -62,7 +62,7 @@ public class flightEntryFragment extends Fragment {
 
     public void createFlightEntry(int fFin, int FEu, int FCan, int FTra, User user) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
-        EntryManager EM = user.getEM();
+
         // add relevant values to list
         ArrayList<Integer> travelValues = new ArrayList<Integer>();
         travelValues.add(fFin);
@@ -70,7 +70,10 @@ public class flightEntryFragment extends Fragment {
         travelValues.add(FCan);
         travelValues.add(FTra);
 
+        // get the user's entry manager
+        EntryManager EM = user.getEM();
         EM.addEntry(2, travelValues);
+
         startActivity(intent);
     }
 

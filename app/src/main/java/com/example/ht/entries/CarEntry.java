@@ -38,7 +38,7 @@ public class CarEntry extends Entry {
 
     @Override
     public void countTotalCO() {
-        //send request to ilmastodieetti to calculate CO2
+        // make request url
         String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/CarEstimate?"
                 + "query.buildYear=" + carYear
                 + "&query.driveDistance=" + km

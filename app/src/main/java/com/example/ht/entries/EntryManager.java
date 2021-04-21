@@ -4,19 +4,13 @@ import java.util.ArrayList;
 
 public class EntryManager {
     //similar structure to UserManager
-    //different lists for different types of entries?
+    //different lists for different types of entries
 
     private ArrayList<PublicEntry> publicEntryArray;
     private ArrayList<FlightEntry> flightEntryArray;
     private ArrayList<CarEntry> carEntryArray;
 
     private int idCounter = 0;
-
-    //singleton
-    private static EntryManager entryManager = new EntryManager();
-    public static EntryManager getInstance() {
-        return entryManager;
-    }
 
     public EntryManager() {
         publicEntryArray = new ArrayList<PublicEntry>();
@@ -44,8 +38,10 @@ public class EntryManager {
             System.out.println("adding car entry");
             carEntryArray.add(new CarEntry(travelValues, idCounter));
         } else if (travelType == 2) {
+            System.out.println("adding flight entry");
             flightEntryArray.add(new FlightEntry(travelValues, idCounter));
         } else if (travelType == 3) {
+            System.out.println("adding public entry");
             publicEntryArray.add(new PublicEntry(travelValues, idCounter));
         }
     }

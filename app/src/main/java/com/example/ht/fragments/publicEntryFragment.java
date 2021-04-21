@@ -60,8 +60,8 @@ public class publicEntryFragment extends Fragment {
     }
     public void createPublicEntry(int lBus,int sBus, int lTrain,int sTrain,int tram,int metro, User user) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
+
         // add relevant values to list
-        EntryManager EM = user.getEM();
         ArrayList<Integer> travelValues = new ArrayList<Integer>();
         travelValues.add(lBus);
         travelValues.add(sBus);
@@ -70,8 +70,10 @@ public class publicEntryFragment extends Fragment {
         travelValues.add(tram);
         travelValues.add(metro);
 
+        // get the user's entry manager
+        EntryManager EM = user.getEM();
         EM.addEntry(3, travelValues);
-        EM.addEntry();
+
         startActivity(intent);
     }
 }

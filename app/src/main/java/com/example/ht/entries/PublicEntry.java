@@ -45,8 +45,6 @@ public class PublicEntry extends Entry{
     @Override
     public void countTotalCO() {
         //make request url from values
-        // url example https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/PublicTransportEstimate?longDistanceBusYear=20&longDistanceTrainYear=20&metroweek=0&tramWeek=0&cityBusWeek=0&cityTrainWeek=0
-
         String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/PublicTransportEstimate?"
                 + "longDistanceBusYear=" + (int) lBus
                 + "&longDistanceTrainYear=" + lTrain
@@ -54,7 +52,7 @@ public class PublicEntry extends Entry{
                 + "&tramWeek=" + tram
                 + "&cityBusWeek=" + sBus
                 + "&cityTrainWeek=" + sTrain;
-
+        System.out.println(url);
         // send request
         readXML(url);
     }
@@ -101,5 +99,4 @@ public class PublicEntry extends Entry{
             e.printStackTrace();
         }
     }
-
 }
