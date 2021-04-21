@@ -13,9 +13,9 @@
     <string name="see_trip_data">See trip data:</string>
     <string name="log_a_new_trip">Log a new trip:</string>
     <string name="add_trip">Add Trip</string>
-    <string name="enter_car_build_year">Enter Car Build Year</string>
-    <string name="enter_d_rive_distance">Enter drive distance</string>
-    <string name="enter_number_of_passengers">Enter number of passengers</string>
+    <string name="enter_car_build_year">car build Year</string>
+    <string name="enter_d_rive_distance">drive distance</string>
+    <string name="enter_number_of_passengers">number of passengers</string>
     <string name="add_flights">Add Flights</string>
     <string name="flights_in_finland">in Finland</string>
     <string name="flights_in_europe">in Europe</string>

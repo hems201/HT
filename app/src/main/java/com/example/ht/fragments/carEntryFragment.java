@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ht.MenuActivity;
 import com.example.ht.R;
+import com.example.ht.User;
 import com.example.ht.entries.EntryManager;
 
 public class carEntryFragment extends Fragment {
@@ -22,6 +23,8 @@ public class carEntryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        assert getArguments() != null;
+        User user = (User) getArguments().getSerializable("user");
         view =  inflater.inflate(R.layout.fragment_car_entry, container, false);
 
         //set up editTexts fields and button
@@ -30,17 +33,14 @@ public class carEntryFragment extends Fragment {
         EditText editPassengers = view.findViewById(R.id.editPassengers);
 
         Button addCarBtn = view.findViewById(R.id.addCarEntry);
-        addCarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //get text input contents
-                int km = Integer.parseInt(String.valueOf(editDriveDist.getText()));
-                int carYear = Integer.parseInt(String.valueOf(editCarYear.getText()));
-                int passengers = Integer.parseInt(String.valueOf(editPassengers.getText()));
+        addCarBtn.setOnClickListener(v -> {
+            //get text input contents
+            int km = Integer.parseInt(String.valueOf(editDriveDist.getText()));
+            int carYear = Integer.parseInt(String.valueOf(editCarYear.getText()));
+            int passengers = Integer.parseInt(String.valueOf(editPassengers.getText()));
 
-                //create a new entry and close fragment
-                createCarEntry(km, carYear, passengers);
-            }
+            //create a new entry and close fragment
+            createCarEntry(km, carYear, passengers, user);
         });
 
 
@@ -51,9 +51,9 @@ public class carEntryFragment extends Fragment {
         System.out.println("car entry view created\n");
 
     }
-    public void createCarEntry(int km, int carYear, int passengers) {
+    public void createCarEntry(int km, int carYear, int passengers, User user) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
-        EntryManager EM = EntryManager.getInstance();
+        EntryManager EM = user.getEM();
         //EM.addEntry();
         startActivity(intent);
     }

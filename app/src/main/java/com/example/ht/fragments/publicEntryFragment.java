@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ht.MenuActivity;
 import com.example.ht.R;
+import com.example.ht.User;
 import com.example.ht.entries.EntryManager;
 
 public class publicEntryFragment extends Fragment {
@@ -21,6 +22,8 @@ public class publicEntryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        assert getArguments() != null;
+        User user = (User) getArguments().getSerializable("user");
         view =  inflater.inflate(R.layout.fragment_public_entry, container, false);
 
         //set up editTexts fields and button
@@ -42,7 +45,7 @@ public class publicEntryFragment extends Fragment {
             int metro = Integer.parseInt(String.valueOf(editMetro.getText()));
 
             //create a new entry and close fragment
-            createPublicEntry(lBus,sBus,lTrain,sTrain,tram,metro);
+            createPublicEntry(lBus,sBus,lTrain,sTrain,tram,metro, user);
         });
 
 
@@ -53,9 +56,9 @@ public class publicEntryFragment extends Fragment {
         System.out.println("public entry view created\n");
 
     }
-    public void createPublicEntry(int lBus,int sBus, int lTrain,int sTrain,int tram,int metro) {
+    public void createPublicEntry(int lBus,int sBus, int lTrain,int sTrain,int tram,int metro, User user) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
-        EntryManager EM = EntryManager.getInstance();
+        EntryManager EM = user.getEM();
         EM.addEntry();
         startActivity(intent);
     }

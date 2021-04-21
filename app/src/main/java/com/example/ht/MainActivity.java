@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             User user = (User) userSpinner.getSelectedItem();
             intent.putExtra("username", user);
-            System.out.println("User sent from main activity to menu acitivity");
+            System.out.println("User sent from main activity to menu activity");
             startActivity(intent);
         };
         logInBtn.setOnClickListener(lis);

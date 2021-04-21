@@ -14,7 +14,7 @@ public class EntryManager {
         return entryManager;
     }
 
-    private EntryManager() {
+    public EntryManager() {
         publicEntryArray = new ArrayList<PublicEntry>();
 
     }

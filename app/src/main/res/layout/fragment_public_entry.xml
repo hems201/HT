@@ -20,8 +20,8 @@
 
     <EditText
         android:id="@+id/editShortBus"
-        android:layout_width="184dp"
-        android:layout_height="46dp"
+        android:layout_width="166dp"
+        android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/short_distance_bus"
@@ -35,37 +35,38 @@
 
     <EditText
         android:id="@+id/editLongBus"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/long_distance_bus"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintHorizontal_bias="0.932"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.502" />
 
     <EditText
         android:id="@+id/editLongTrain"
-        android:layout_width="195dp"
-        android:layout_height="50dp"
+        android:layout_width="164dp"
+        android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/long_distance_trains"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.681" />
+        app:layout_constraintVertical_bias="0.677" />
 
     <EditText
         android:id="@+id/editShortTrain"
-        android:layout_width="178dp"
-        android:layout_height="58dp"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/short_distance_train"
@@ -79,23 +80,23 @@
 
     <EditText
         android:id="@+id/editTram"
-        android:layout_width="81dp"
-        android:layout_height="45dp"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/tram"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintHorizontal_bias="0.774"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327" />
+        app:layout_constraintVertical_bias="0.329" />
 
     <EditText
         android:id="@+id/editMetro"
-        android:layout_width="82dp"
-        android:layout_height="48dp"
+        android:layout_width="66dp"
+        android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/metro"

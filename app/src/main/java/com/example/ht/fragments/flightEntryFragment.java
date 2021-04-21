@@ -12,10 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.ht.MainActivity;
 import com.example.ht.MenuActivity;
 import com.example.ht.R;
-import com.example.ht.UserManager;
+import com.example.ht.User;
 import com.example.ht.entries.EntryManager;
 
 public class flightEntryFragment extends Fragment {
@@ -23,6 +22,8 @@ public class flightEntryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        assert getArguments() != null;
+        User user = (User) getArguments().getSerializable("user");
         view =  inflater.inflate(R.layout.fragment_flight_entry, container, false);
 
         //set up editTexts fields and button
@@ -42,7 +43,7 @@ public class flightEntryFragment extends Fragment {
                 int planeTra = Integer.parseInt(String.valueOf(editFlightsCont.getText()));
 
                 //create a new entry and close fragment
-                createFlightEntry(planeFin, planeEu, planeCa, planeTra);
+                createFlightEntry(planeFin, planeEu, planeCa, planeTra, user);
             }
         });
 
@@ -55,9 +56,9 @@ public class flightEntryFragment extends Fragment {
 
     }
 
-    public void createFlightEntry(int fFin, int FEu, int FCan, int FTra) {
+    public void createFlightEntry(int fFin, int FEu, int FCan, int FTra, User user) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
-        EntryManager EM = EntryManager.getInstance();
+        EntryManager EM = user.getEM();
         //EM.addEntry(fFin, FEu, FCan, FTra));
         startActivity(intent);
     }

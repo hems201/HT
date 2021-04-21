@@ -21,6 +21,7 @@ import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
 
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,9 @@ public class MenuActivity extends AppCompatActivity {
                 int pos = tripDataSpinner.getSelectedItemPosition();
                 if (pos > 0) {
                     Fragment frag = new tripDataFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", user);
+                    frag.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.replace(R.id.fragmentFrameMenu, frag);
@@ -89,9 +93,13 @@ public class MenuActivity extends AppCompatActivity {
                         System.out.println("Opening flight");
                     }
 
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", user);
+                    assert frag != null;
+                    frag.setArguments(bundle);
+
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
-                    assert frag != null;
                     transaction.replace(R.id.fragmentFrameMenu, frag);
                     transaction.commit();
                 }
@@ -106,7 +114,7 @@ public class MenuActivity extends AppCompatActivity {
         @Override
     public void onStart() {
         super.onStart();
-        User user = (User) getIntent().getSerializableExtra("user");
-        System.out.println("user mainactivitysta");
+        user = (User) getIntent().getSerializableExtra("user");
+        System.out.println("user mainactivitysta menuun");
     }
 }
