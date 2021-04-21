@@ -21,10 +21,10 @@ public class User implements Serializable {
         EM = new EntryManager();
         System.out.println("EM CREATED");
 
-        if (managerData!=null) {
-            //parse managerData to EM
-            Node node = managerData.item(0);
 
+        if (managerData!=null && managerData.item(0)!=null) {
+            Node node = managerData.item(0);
+            //parse managerData to EM
             if (node.getNodeType() == node.ELEMENT_NODE) {
                 Element e = (Element) node;
                 //classify entry type

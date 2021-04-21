@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class UserManager {
+public class UserManager implements Serializable {
     private ArrayList<User> user_array;
     private int idCounter = 0;
     final String xmlFile = "users.xml";
@@ -112,42 +113,42 @@ public class UserManager {
             xmlSerializer.startTag(null, "userData");
 
             // old users
-            for (int i=1; i<idCounter; i++) {
+            System.out.println(idCounter);
+            for (int i=0; i<idCounter; i++) {
                 xmlSerializer.startTag(null, "user");
 
                 xmlSerializer.startTag(null, "userName");
-                xmlSerializer.text(user_array.get(i-1).username);
+                xmlSerializer.text(user_array.get(i).username);
                 xmlSerializer.endTag(null, "userName");
 
                 xmlSerializer.startTag(null, "userId");
-                xmlSerializer.text(String.valueOf(i));
+                xmlSerializer.text(String.valueOf(i+1));
                 xmlSerializer.endTag(null, "userId");
 
                 xmlSerializer.startTag(null, "entryManager");
                     //call user's entry manager to write entries to file
-                    user_array.get(i-1).getEM().writeFile(xmlSerializer);
+                    xmlSerializer = user_array.get(i).getEM().writeFile(xmlSerializer);
                 xmlSerializer.endTag(null, "entryManager");
 
                 xmlSerializer.endTag(null, "user");
                 System.out.println("added old user " +  user_array.get(i).username);
             }
 
-            // add new user
-            xmlSerializer.startTag(null, "user");
+            if (username !=null) {
+                // add new user
+                xmlSerializer.startTag(null, "user");
 
-            xmlSerializer.startTag(null, "userName");
-            xmlSerializer.text(username);
-            xmlSerializer.endTag(null, "userName");
+                xmlSerializer.startTag(null, "userName");
+                xmlSerializer.text(username);
+                xmlSerializer.endTag(null, "userName");
 
-            xmlSerializer.startTag(null, "userId");
-            xmlSerializer.text(userId);
-            xmlSerializer.endTag(null, "userId");
+                xmlSerializer.startTag(null, "userId");
+                xmlSerializer.text(userId);
+                xmlSerializer.endTag(null, "userId");
 
-            xmlSerializer.startTag(null, "entryManager");
-            //no entries for new users yet
-            xmlSerializer.endTag(null, "entryManager");
-
-            xmlSerializer.endTag(null, "user");
+                //new user has no entries yet
+                xmlSerializer.endTag(null, "user");
+            }
 
             xmlSerializer.endTag(null, "userData");
 

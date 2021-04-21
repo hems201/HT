@@ -50,16 +50,6 @@ public class PublicEntry extends Entry implements Serializable {
             countTotalCO();
         }
     }
-    public double getBusCO() {return busCO;};
-
-    public Double getTrainCO() {
-        return trainCO;
-    }
-
-    public Double getOtherCO() {
-        return otherCO;
-    }
-
     public Integer getlBus(){return lBus;}
     public Integer getsBus(){return sBus;}
     public Integer getlTrain(){return lTrain;}
@@ -74,7 +64,7 @@ public class PublicEntry extends Entry implements Serializable {
     public void countTotalCO() {
         //make request url from values
         String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/PublicTransportEstimate?"
-                + "longDistanceBusYear=" + (int) lBus
+                + "longDistanceBusYear=" +  lBus
                 + "&longDistanceTrainYear=" + lTrain
                 + "&metroweek=" +  metro
                 + "&tramWeek=" + tram

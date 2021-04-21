@@ -67,7 +67,7 @@ public class tripDataFragment extends Fragment {
         DataPoint[] dp = new DataPoint[size];
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.");  //TODO LAITA AIKA X-AKSELILLE
         for(int i=0;i<size;i++){
-            Date x = array.get(i).getDate();
+            Date x = array.get(i).getDateTime();
             Double y = array.get(i).getTotalCO();
             dp[i] = new DataPoint(x, y);
         }
@@ -86,7 +86,7 @@ public class tripDataFragment extends Fragment {
         DataPoint[] dp = new DataPoint[size];
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM."); //TODO LAITA AIKA X-AKSELILLE
         for(int i=0;i<size;i++){
-            Date x = array.get(i).getDate();
+            Date x = array.get(i).getDateTime();
             Double y = array.get(i).getTotalCO();
             dp[i] = new DataPoint(x, y);
         }
@@ -105,7 +105,7 @@ public class tripDataFragment extends Fragment {
         DataPoint[] dp = new DataPoint[size];
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM."); //TODO LAITA AIKA X-AKSELILLE
         for(int i=0;i<size;i++){
-            Date x = array.get(i).getDate();
+            Date x = array.get(i).getDateTime();
             Double y = array.get(i).getTotalCO();
             dp[i] = new DataPoint(x, y);
         }

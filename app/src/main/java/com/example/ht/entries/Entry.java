@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Entry implements Serializable {
-    String entryID;
-public abstract class Entry {
     Integer entryID;
     Date date;
     Double totalCO;
@@ -18,7 +16,10 @@ public abstract class Entry {
     public String getDate() {
         SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
         String x = sdf.format(date);
-        return x; }
+        return x;
+    }
+
+    public Date getDateTime() {return date;}
 
     public Double getTotalCO() { return totalCO; }
 

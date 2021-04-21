@@ -4,9 +4,8 @@ import java.io.Serializable;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class EntryManager implements Serializable {
     //similar structure to UserManager
@@ -22,7 +21,6 @@ public class EntryManager implements Serializable {
         publicEntryArray = new ArrayList<PublicEntry>();
         flightEntryArray = new ArrayList<FlightEntry>();
         carEntryArray = new ArrayList<CarEntry>();
-
     }
 
     //-------------------------------------------------------------------------//
@@ -57,19 +55,33 @@ public class EntryManager implements Serializable {
 
         if (travelType == 1) {
             System.out.println("adding car entry");
-            carEntryArray.add(new CarEntry(travelValues, idCounter, date, coList.get(0)));
+            if (coList!=null) {
+                carEntryArray.add(new CarEntry(travelValues, idCounter, date, coList.get(0)));
+            } else {
+                carEntryArray.add(new CarEntry(travelValues, idCounter, date, null));
+            }
         } else if (travelType == 2) {
             System.out.println("adding flight entry");
-            flightEntryArray.add(new FlightEntry(travelValues, idCounter, date, coList.get(0)));
+            if (coList!=null) {
+                flightEntryArray.add(new FlightEntry(travelValues, idCounter, date, coList.get(0)));
+            } else {
+                flightEntryArray.add(new FlightEntry(travelValues, idCounter, date, null));
+            }
+
         } else if (travelType == 3) {
             System.out.println("adding public entry");
             // has multiple CO values in coList
-            publicEntryArray.add(new PublicEntry(travelValues, idCounter, date, coList));
+            if (coList!=null) {
+                publicEntryArray.add(new PublicEntry(travelValues, idCounter, date, coList));
+            } else {
+                publicEntryArray.add(new PublicEntry(travelValues, idCounter, date, null));
+            }
         }
     }
 
-    public void writeFile(XmlSerializer xmlSerializer) {
-        //save entries into file
+    public XmlSerializer writeFile(XmlSerializer xmlSerializer) {
+        //save entries into file, part of UserManager writefile()
+        System.out.println("Entries are being written into file");
         try {
             for (int i=0; i<carEntryArray.size()-1; i++) {
                 xmlSerializer.startTag(null, "CarEntry");
@@ -184,8 +196,7 @@ public class EntryManager implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
+        return xmlSerializer;
     }
 
     public void deleteEntry(String entryID) {

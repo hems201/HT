@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             User user = (User) userSpinner.getSelectedItem();
             intent.putExtra("username", user);
+            intent.putExtra("manager", UM);
             System.out.println("User sent from main activity to menu activity");
             startActivity(intent);
         };

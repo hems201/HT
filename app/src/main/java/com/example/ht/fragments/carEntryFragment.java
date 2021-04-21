@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.example.ht.MenuActivity;
 import com.example.ht.R;
 import com.example.ht.User;
+import com.example.ht.UserManager;
 import com.example.ht.entries.EntryManager;
 
 import java.text.SimpleDateFormat;
@@ -24,11 +25,13 @@ import java.util.Calendar;
 public class carEntryFragment extends Fragment {
 
     View view;
+    UserManager UM;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert getArguments() != null;
         User user = (User) getArguments().getSerializable("user");
+        UM = (UserManager) getArguments().getSerializable("manager");
         view =  inflater.inflate(R.layout.fragment_car_entry, container, false);
 
         //set up editTexts fields and button
@@ -70,6 +73,9 @@ public class carEntryFragment extends Fragment {
         SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
         EM.addEntry(1, travelValues, 0, sdf.format(Calendar.getInstance().getTime()), null);
 
+        UM.writeFile(null, 0);
+
+        intent.putExtra("manager", UM);
         startActivity(intent);
     }
 }
