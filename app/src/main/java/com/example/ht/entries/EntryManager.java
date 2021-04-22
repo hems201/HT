@@ -27,6 +27,7 @@ public class EntryManager implements Serializable {
     private ArrayList<FlightEntry> flightEntryArray;
     private ArrayList<CarEntry> carEntryArray;
 
+    String filepath = "/data/data/com.example.ht/files/users.xml";
     private int idCounter = 0;
 
     public EntryManager() {
@@ -98,7 +99,6 @@ public class EntryManager implements Serializable {
     public void appendCarEntry(int userId, CarEntry carEntry) {
         // add new CarEntry do userdata file
         try {
-            String filepath = "/data/data/com.example.ht/files/users.xml";
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
             Document doc = docBuilder.parse(filepath);
@@ -156,7 +156,6 @@ public class EntryManager implements Serializable {
     public void appendFlightEntry(int userId, FlightEntry flightEntry) {
         // add new FlightEntry do userdata file
         try {
-            String filepath = "/data/data/com.example.ht/files/users.xml";
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
             Document doc = docBuilder.parse(filepath);
@@ -218,7 +217,6 @@ public class EntryManager implements Serializable {
     public void appendPublicEntry(int userId, PublicEntry publicEntry) {
         // add new PublicEntry do userdata file
         try {
-            String filepath = "/data/data/com.example.ht/files/users.xml";
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
             Document doc = docBuilder.parse(filepath);
