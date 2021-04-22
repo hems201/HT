@@ -55,7 +55,7 @@ public class User implements Serializable {
                         travelValues.add(passengers); coList.add(totalCO);
 
                         //pass to manager
-                        EM.addEntry(1, travelValues, entryID, date, coList);
+                        EM.addEntry(1, travelValues, entryID, date, coList, userid);
                     }
                 }
 
@@ -82,7 +82,7 @@ public class User implements Serializable {
                         coList.add(totalCO);
 
                         //pass to manager
-                        EM.addEntry(2, travelValues, entryID, date, coList);
+                        EM.addEntry(2, travelValues, entryID, date, coList, userid);
                     }
                 }
 
@@ -116,7 +116,7 @@ public class User implements Serializable {
                         coList.add(trainCO); coList.add(otherCO);
 
                         //pass to manager
-                        EM.addEntry(3, travelValues, entryID, date, coList);
+                        EM.addEntry(3, travelValues, entryID, date, coList, userid);
                     }
                 }
             }

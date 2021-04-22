@@ -20,9 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
-
     User user;
-    UserManager UM;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +47,6 @@ public class MenuActivity extends AppCompatActivity {
                     Fragment frag = new tripDataFragment();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", user);
-                    bundle.putSerializable("manager", UM);
                     bundle.putInt("position",pos);
                     frag.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
@@ -98,7 +96,6 @@ public class MenuActivity extends AppCompatActivity {
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", user);
-                    bundle.putSerializable("manager", UM);
                     assert frag != null;
                     frag.setArguments(bundle);
 
@@ -119,11 +116,8 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        user = (User) getIntent().getSerializableExtra("user");
-        UM = (UserManager) getIntent().getSerializableExtra("manager");
-        System.out.println("user mainactivitysta menuun");
+        user = (User) getIntent().getExtras().getSerializable("user");
+        System.out.println("user mainactivitysta menuun;" + user.getUserid());
 
-        //update userdata file
-        //UM.writeFile(null, 0);
     }
 }

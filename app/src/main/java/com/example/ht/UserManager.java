@@ -45,8 +45,12 @@ public class UserManager implements Serializable {
 
         System.out.println("Created user " + name);
 
-        //update the user file
-        writeFile(name, idCounter);
+        if (idCounter==1) {
+            writeFile(name);
+        } else {
+            //update the user file
+            appendUser(name, idCounter);
+        }
     }
 
 
@@ -98,9 +102,46 @@ public class UserManager implements Serializable {
         }
     }
 
-    public void writeFile(String username, int userID) {
-        //Write a new created user into file users.xml, write all users
-        String userId = String.valueOf(userID);
+    public void appendUser(String username, int userID) {
+        try {
+            String filepath = "/data/data/com.example.ht/files/users.xml";
+            DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFact.newDocumentBuilder();
+            Document doc = docBuilder.parse(filepath);
+
+            // root element
+            Node userData = doc.getFirstChild();
+
+            //create new user
+            Element user = doc.createElement("user");
+
+            Element userName = doc.createElement("username");
+            userName.appendChild(doc.createTextNode(username));
+            user.appendChild(userName);
+
+            Element userid = doc.createElement("userId");
+            userid.appendChild(doc.createTextNode(Integer.toString(userID)));
+            user.appendChild(userid);
+
+            Element man = doc.createElement("EntryManager");
+            user.appendChild(man);
+
+            //add user to file
+            userData.appendChild(user);
+
+            System.out.println("added to file user " + username);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeFile(String username) {
+        //Write a new created user into new file users.xml
+        String userId = "1";
 
         try {
             FileOutputStream fileos= ContextProvider.getContext().openFileOutput(xmlFile, Context.MODE_PRIVATE);
@@ -112,43 +153,22 @@ public class UserManager implements Serializable {
 
             xmlSerializer.startTag(null, "userData");
 
-            // old users
-            System.out.println(idCounter);
-            for (int i=0; i<idCounter; i++) {
-                xmlSerializer.startTag(null, "user");
+            // add new user
+            xmlSerializer.startTag(null, "user");
 
-                xmlSerializer.startTag(null, "userName");
-                xmlSerializer.text(user_array.get(i).username);
-                xmlSerializer.endTag(null, "userName");
+            xmlSerializer.startTag(null, "userName");
+            xmlSerializer.text(username);
+            xmlSerializer.endTag(null, "userName");
 
-                xmlSerializer.startTag(null, "userId");
-                xmlSerializer.text(String.valueOf(i+1));
-                xmlSerializer.endTag(null, "userId");
+            xmlSerializer.startTag(null, "userId");
+            xmlSerializer.text(userId);
+            xmlSerializer.endTag(null, "userId");
 
-                xmlSerializer.startTag(null, "entryManager");
-                    //call user's entry manager to write entries to file
-                    xmlSerializer = user_array.get(i).getEM().writeFile(xmlSerializer);
-                xmlSerializer.endTag(null, "entryManager");
+            xmlSerializer.startTag(null, "EntryManager");
+            xmlSerializer.endTag(null, "EntryManager");
 
-                xmlSerializer.endTag(null, "user");
-                System.out.println("added old user " +  user_array.get(i).username);
-            }
-
-            if (username !=null) {
-                // add new user
-                xmlSerializer.startTag(null, "user");
-
-                xmlSerializer.startTag(null, "userName");
-                xmlSerializer.text(username);
-                xmlSerializer.endTag(null, "userName");
-
-                xmlSerializer.startTag(null, "userId");
-                xmlSerializer.text(userId);
-                xmlSerializer.endTag(null, "userId");
-
-                //new user has no entries yet
-                xmlSerializer.endTag(null, "user");
-            }
+            //new user has no entries yet
+            xmlSerializer.endTag(null, "user");
 
             xmlSerializer.endTag(null, "userData");
 
@@ -159,7 +179,7 @@ public class UserManager implements Serializable {
             fileos.write(dataWrite.getBytes());
             fileos.close();
 
-            System.out.println("Saved to file: " + username);
+            System.out.println("Saved to new file: " + username);
         }
         catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
