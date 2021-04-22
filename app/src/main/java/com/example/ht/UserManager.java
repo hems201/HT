@@ -10,6 +10,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,11 +22,21 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class UserManager implements Serializable {
     private ArrayList<User> user_array;
     private int idCounter = 0;
+
     final String xmlFile = "users.xml";
+    String path = ContextProvider.getContext().getFilesDir().getAbsolutePath();
+    File file = new File(path + "/users.xml");
+
 
     //Singleton:
     private static UserManager UM = new UserManager();
@@ -104,10 +115,10 @@ public class UserManager implements Serializable {
 
     public void appendUser(String username, int userID) {
         try {
-            String filepath = "/data/data/com.example.ht/files/users.xml";
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
-            Document doc = docBuilder.parse(filepath);
+            Document doc = docBuilder.parse(file);
+            System.out.println(file.getAbsolutePath());
 
             // root element
             Node userData = doc.getFirstChild();
@@ -129,12 +140,24 @@ public class UserManager implements Serializable {
             //add user to file
             userData.appendChild(user);
 
+            TransformerFactory tff = TransformerFactory.newInstance();
+            Transformer tf = tff.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult res = new StreamResult(file);
+            tf.transform(source, res);
+
             System.out.println("added to file user " + username);
+
+
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -149,7 +172,7 @@ public class UserManager implements Serializable {
             StringWriter writer = new StringWriter();
             xmlSerializer.setOutput(writer);
             xmlSerializer.startDocument("UTF-8", true);
-            xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+            //xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 
             xmlSerializer.startTag(null, "userData");
 

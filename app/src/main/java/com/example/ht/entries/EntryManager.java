@@ -1,7 +1,9 @@
 package com.example.ht.entries;
 
+import com.example.ht.ContextProvider;
 import com.example.ht.User;
 
+import java.io.File;
 import java.io.Serializable;
 
 import org.w3c.dom.Document;
@@ -17,6 +19,12 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 
 public class EntryManager implements Serializable {
@@ -27,7 +35,9 @@ public class EntryManager implements Serializable {
     private ArrayList<FlightEntry> flightEntryArray;
     private ArrayList<CarEntry> carEntryArray;
 
-    String filepath = "/data/data/com.example.ht/files/users.xml";
+    String path = ContextProvider.getContext().getFilesDir().getAbsolutePath();
+    File file = new File(path + "/users.xml");
+
     private int idCounter = 0;
 
     public EntryManager() {
@@ -101,7 +111,7 @@ public class EntryManager implements Serializable {
         try {
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
-            Document doc = docBuilder.parse(filepath);
+            Document doc = docBuilder.parse(file);
 
             // get right user
             NodeList userList = doc.getElementsByTagName("user");
@@ -141,6 +151,12 @@ public class EntryManager implements Serializable {
 
                     thisUser.appendChild(entry);
 
+                    TransformerFactory tff = TransformerFactory.newInstance();
+                    Transformer tf = tff.newTransformer();
+                    DOMSource source = new DOMSource(doc);
+                    StreamResult res = new StreamResult(file);
+                    tf.transform(source, res);
+
                     System.out.println("added new car entry to file");
                 }
             }
@@ -151,6 +167,10 @@ public class EntryManager implements Serializable {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
     }
     public void appendFlightEntry(int userId, FlightEntry flightEntry) {
@@ -158,7 +178,7 @@ public class EntryManager implements Serializable {
         try {
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
-            Document doc = docBuilder.parse(filepath);
+            Document doc = docBuilder.parse(file);
 
             // get right user
             NodeList userList = doc.getElementsByTagName("user");
@@ -202,6 +222,12 @@ public class EntryManager implements Serializable {
 
                     thisUser.appendChild(entry);
 
+                    TransformerFactory tff = TransformerFactory.newInstance();
+                    Transformer tf = tff.newTransformer();
+                    DOMSource source = new DOMSource(doc);
+                    StreamResult res = new StreamResult(file);
+                    tf.transform(source, res);
+
                     System.out.println("added new flight entry to file");
                 }
             }
@@ -212,6 +238,10 @@ public class EntryManager implements Serializable {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
     }
     public void appendPublicEntry(int userId, PublicEntry publicEntry) {
@@ -219,7 +249,7 @@ public class EntryManager implements Serializable {
         try {
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
-            Document doc = docBuilder.parse(filepath);
+            Document doc = docBuilder.parse(file);
 
             // get right user
             NodeList userList = doc.getElementsByTagName("user");
@@ -283,6 +313,12 @@ public class EntryManager implements Serializable {
 
                     thisUser.appendChild(entry);
 
+                    TransformerFactory tff = TransformerFactory.newInstance();
+                    Transformer tf = tff.newTransformer();
+                    DOMSource source = new DOMSource(doc);
+                    StreamResult res = new StreamResult(file);
+                    tf.transform(source, res);
+
                     System.out.println("added new public entry to file");
                 }
             }
@@ -292,6 +328,10 @@ public class EntryManager implements Serializable {
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
             e.printStackTrace();
         }
     }
