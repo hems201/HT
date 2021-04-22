@@ -73,6 +73,8 @@ public class carEntryFragment extends Fragment {
         SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
         EM.addEntry(1, travelValues, 0, sdf.format(Calendar.getInstance().getTime()), null);
 
+        System.out.println("TRAVEL VALUES: " + travelValues);
+
         UM.writeFile(null, 0);
 
         intent.putExtra("manager", UM);

@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment;
 import com.example.ht.R;
 import com.example.ht.User;
 import com.example.ht.entries.CarEntry;
+import com.example.ht.entries.Entry;
 import com.example.ht.entries.EntryManager;
 import com.example.ht.entries.FlightEntry;
 import com.example.ht.entries.PublicEntry;
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
@@ -34,20 +36,17 @@ public class tripDataFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        view =  inflater.inflate(R.layout.fragment_trip_data, container, false);
         User user = (User) getArguments().getSerializable("user");
         int pos = getArguments().getInt("position");    //Spinner position for making the right graph
-        view =  inflater.inflate(R.layout.fragment_trip_data, container, false);
-
-        if (pos == 1) {
-            makePublicGraph(view,user);
-        } else if (pos == 2) {
-            makeCarGraph(view, user);
-        } else if (pos == 3) {
-            makeFlightGraph(view, user);
-        } else if (pos == 4) {
+        System.out.println("POSITION: " +  pos);
+        //make the correct graph
+        if (pos == 1 || pos == 2 || pos == 3){
+            makeGraph(view, user, pos);
+        } else {
             makeAllEntriesGraph(view,user);
         }
-
         return view;
     }
 
@@ -56,63 +55,73 @@ public class tripDataFragment extends Fragment {
 
     }
 
-    public void makeCarGraph(View view, User user) {
-
+    public void makeGraph(View view, User user, int pos) {
+        System.out.println("POSITION 4: " +  pos);
         GraphView graph = view.findViewById(R.id.line_graph);
-
         EntryManager EM = user.getEM();
-        ArrayList<CarEntry> array = EM.getCarEntryArray();
+        DataPoint[] dp;
+        if (pos == 1) {
+            ArrayList<PublicEntry> array = EM.getPublicArray();
+            dp = getPublicData(array);
+        } else if (pos == 2) {
+            ArrayList<CarEntry> array = EM.getCarEntryArray();
+            dp = getCarData(array);
+        } else if (pos ==3) {
+            ArrayList<FlightEntry> array = EM.getFlightEntryArray();
+            dp = getFlightData(array);
+        } else { dp=null;}
+
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.");
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if(isValueX){
+                    return sdf.format(new Date((long)value));
+                } else {
+                    return super.formatLabel(value, isValueX);
+                }
+            }
+        });
+
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
+        graph.addSeries(series);
+    }
+
+    public DataPoint[] getCarData (ArrayList<CarEntry> array){
         int size = array.size();
-        System.out.println(size);
         DataPoint[] dp = new DataPoint[size];
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.");  //TODO LAITA AIKA X-AKSELILLE
+        for(int i=0;i<size;i++){
+//            Date x = array.get(i).getDateTime();
+//            Double y = array.get(i).getTotalCO();
+            Date x = new Date(System.currentTimeMillis());
+            Double y = 200.150;
+            dp[i] = new DataPoint(x, y);
+        }
+        return dp;
+    }
+    public DataPoint[] getPublicData (ArrayList<PublicEntry> array){
+        int size = array.size();
+        DataPoint[] dp = new DataPoint[size];
         for(int i=0;i<size;i++){
             Date x = array.get(i).getDateTime();
             Double y = array.get(i).getTotalCO();
             dp[i] = new DataPoint(x, y);
         }
-
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
-        graph.addSeries(series);
+        return dp;
     }
-    public void makePublicGraph(View view, User user) {
-
-        GraphView graph = view.findViewById(R.id.line_graph);
-
-        EntryManager EM = user.getEM();
-        ArrayList<PublicEntry> array = EM.getPublicArray();
+    public DataPoint[] getFlightData (ArrayList<FlightEntry> array){
         int size = array.size();
-        System.out.println(size);
         DataPoint[] dp = new DataPoint[size];
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM."); //TODO LAITA AIKA X-AKSELILLE
         for(int i=0;i<size;i++){
             Date x = array.get(i).getDateTime();
             Double y = array.get(i).getTotalCO();
             dp[i] = new DataPoint(x, y);
         }
-
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
-        graph.addSeries(series);
+        return dp;
     }
-    public void makeFlightGraph(View view, User user) {
 
-        GraphView graph = view.findViewById(R.id.line_graph);
-
-        EntryManager EM = user.getEM();
-        ArrayList<FlightEntry> array = EM.getFlightEntryArray();
-        int size = array.size();
-        System.out.println(size);
-        DataPoint[] dp = new DataPoint[size];
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM."); //TODO LAITA AIKA X-AKSELILLE
-        for(int i=0;i<size;i++){
-            Date x = array.get(i).getDateTime();
-            Double y = array.get(i).getTotalCO();
-            dp[i] = new DataPoint(x, y);
-        }
-
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
-        graph.addSeries(series);
-    }
 
     public void makeAllEntriesGraph(View view, User user) {
 
