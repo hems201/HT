@@ -25,13 +25,12 @@ import java.util.Calendar;
 public class carEntryFragment extends Fragment {
 
     View view;
-    UserManager UM;
+    User user;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         assert getArguments() != null;
-        User user = (User) getArguments().getSerializable("user");
-        UM = (UserManager) getArguments().getSerializable("manager");
+        user = (User) getArguments().getSerializable("user");
         view =  inflater.inflate(R.layout.fragment_car_entry, container, false);
 
         //set up editTexts fields and button
@@ -47,7 +46,7 @@ public class carEntryFragment extends Fragment {
             int passengers = Integer.parseInt(String.valueOf(editPassengers.getText()));
 
             //create a new entry and close fragment
-            createCarEntry(km, carYear, passengers, user);
+            createCarEntry(km, carYear, passengers);
         });
 
 
@@ -58,7 +57,7 @@ public class carEntryFragment extends Fragment {
         System.out.println("car entry view created\n");
 
     }
-    public void createCarEntry(int km, int carYear, int passengers, User user) {
+    public void createCarEntry(int km, int carYear, int passengers) {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
 
         // add relevant values to list
@@ -69,15 +68,15 @@ public class carEntryFragment extends Fragment {
 
         // get the user's entry manager
         EntryManager EM = user.getEM();
+        System.out.println(user.getUserid());
 
         SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
-        EM.addEntry(1, travelValues, 0, sdf.format(Calendar.getInstance().getTime()), null);
+        EM.addEntry(1, travelValues, 0,
+                sdf.format(Calendar.getInstance().getTime()), null, user.getUserid());
 
-        System.out.println("TRAVEL VALUES: " + travelValues);
-
-        UM.writeFile(null, 0);
-
-        intent.putExtra("manager", UM);
+        Bundle nbundle = new Bundle();
+        nbundle.putSerializable("user", user);
+        intent.putExtras(nbundle);
         startActivity(intent);
     }
 }
