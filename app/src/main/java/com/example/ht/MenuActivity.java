@@ -43,7 +43,9 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int pos = tripDataSpinner.getSelectedItemPosition();
+                System.out.println("ITEM SELECTED");
                 if (pos > 0) {
+                    System.out.println("GRAPH FRAGMENT GETTING STARTED");
                     Fragment frag = new tripDataFragment();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", user);
@@ -53,6 +55,7 @@ public class MenuActivity extends AppCompatActivity {
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.replace(R.id.fragmentFrameMenu, frag);
                     transaction.commit();
+                    System.out.println("GRAPH FRAGMENT COMMITTED");
                 }
             }
 
