@@ -122,6 +122,9 @@ public class EntryManager implements Serializable {
                     thisUser = userList.item(i);
                     System.out.println("user found; adding entry");
 
+                    //get the EntryManager of this user
+                    Node manager = thisUser.getChildNodes().item(2);
+
                     //create new entry
                     Element entry = doc.createElement("CarEntry");
 
@@ -149,7 +152,7 @@ public class EntryManager implements Serializable {
                     pass.appendChild(doc.createTextNode(String.valueOf(carEntry.getPassengers())));
                     entry.appendChild(pass);
 
-                    thisUser.appendChild(entry);
+                    manager.appendChild(entry);
 
                     TransformerFactory tff = TransformerFactory.newInstance();
                     Transformer tf = tff.newTransformer();
@@ -189,6 +192,9 @@ public class EntryManager implements Serializable {
                     thisUser = userList.item(i);
                     System.out.println("user found; adding entry");
 
+                    //get the EntryManager of this user
+                    Node manager = thisUser.getChildNodes().item(2);
+
                     //create new entry
                     Element entry = doc.createElement("FlightEntry");
 
@@ -220,7 +226,7 @@ public class EntryManager implements Serializable {
                     t.appendChild(doc.createTextNode(String.valueOf(flightEntry.getPlaneTra())));
                     entry.appendChild(t);
 
-                    thisUser.appendChild(entry);
+                    manager.appendChild(entry);
 
                     TransformerFactory tff = TransformerFactory.newInstance();
                     Transformer tf = tff.newTransformer();
@@ -259,6 +265,9 @@ public class EntryManager implements Serializable {
                 if (userList.item(i).getChildNodes().item(1).getTextContent().equals(Integer.toString(userId))) {
                     thisUser = userList.item(i);
                     System.out.println("user found; adding entry");
+
+                    //get the EntryManager of this user
+                    Node manager = thisUser.getChildNodes().item(2);
 
                     //create new entry
                     Element entry = doc.createElement("PublicEntry");
@@ -311,7 +320,7 @@ public class EntryManager implements Serializable {
                     e.appendChild(doc.createTextNode(String.valueOf(publicEntry.getTram())));
                     entry.appendChild(e);
 
-                    thisUser.appendChild(entry);
+                    manager.appendChild(entry);
 
                     TransformerFactory tff = TransformerFactory.newInstance();
                     Transformer tf = tff.newTransformer();
