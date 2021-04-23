@@ -32,7 +32,6 @@ import javax.xml.transform.stream.StreamResult;
 public class EntryManager implements Serializable {
     //similar structure to UserManager
     //different lists for different types of entries
-    //TODO LISÄÄ TOAST JOKA NÄYTTÄÄ TOTAL CO:N
 
     private ArrayList<PublicEntry> publicEntryArray;
     private ArrayList<FlightEntry> flightEntryArray;
