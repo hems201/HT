@@ -70,7 +70,7 @@ public class carEntryFragment extends Fragment {
         EntryManager EM = user.getEM();
         System.out.println(user.getUserid());
 
-        SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy mm:ss");
         EM.addEntry(1, travelValues, 0,
                 sdf.format(Calendar.getInstance().getTime()), null, user.getUserid());
 

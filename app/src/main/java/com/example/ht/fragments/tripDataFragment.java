@@ -73,7 +73,7 @@ public class tripDataFragment extends Fragment {
 
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.");
+        SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -93,10 +93,9 @@ public class tripDataFragment extends Fragment {
         int size = array.size();
         DataPoint[] dp = new DataPoint[size];
         for(int i=0;i<size;i++){
-//            Date x = array.get(i).getDateTime();
-//            Double y = array.get(i).getTotalCO();
-            Date x = new Date(System.currentTimeMillis());
-            Double y = 200.150;
+            Date x = array.get(i).getDateTime();
+            Double y = array.get(i).getTotalCO();
+
             dp[i] = new DataPoint(x, y);
         }
         return dp;

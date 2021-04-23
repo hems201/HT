@@ -14,7 +14,7 @@ public abstract class Entry implements Serializable {
     public Integer getEntryID() { return entryID; }
 
     public String getDate() {
-        SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy mm:ss");
         String x = sdf.format(date);
         return x;
     }

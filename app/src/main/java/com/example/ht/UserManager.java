@@ -75,7 +75,7 @@ public class UserManager implements Serializable {
 
             System.out.println(doc1.getDocumentElement().getNodeName());
 
-            NodeList nList = doc1.getDocumentElement().getElementsByTagName("user");
+            NodeList nList = doc1.getDocumentElement().getElementsByTagName("userData");    //doc1.getDocumentElements("userDate");
 
             // add them to arraylist
             parseNode(nList);
