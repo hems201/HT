@@ -22,9 +22,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class FlightEntry extends Entry implements Serializable {
     Integer planeFin, planeEu, planeCa, planeTra;
-    Double totalCO;
-    Integer entryID;
-    Date date;
 
     public FlightEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, Double co) {
         //open travelValues

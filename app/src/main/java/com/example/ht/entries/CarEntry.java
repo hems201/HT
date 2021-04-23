@@ -21,10 +21,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class CarEntry extends Entry implements Serializable{
-    Integer entryID;
     Integer km, carYear, passengers;
-    Double totalCO;
-    Date date;
 
     public CarEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, Double co) {
         //open travelValues

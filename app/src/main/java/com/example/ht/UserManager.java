@@ -103,7 +103,7 @@ public class UserManager implements Serializable {
                 System.out.println("getting tags");
 
                 user_array.add(new User(
-                        element.getElementsByTagName("userName").item(0).getTextContent(),
+                        element.getElementsByTagName("username").item(0).getTextContent(),
                         Integer.parseInt(element.getElementsByTagName("userId").item(0).getTextContent()),
                         element.getElementsByTagName("EntryManager")
                 ));
@@ -179,9 +179,9 @@ public class UserManager implements Serializable {
             // add new user
             xmlSerializer.startTag(null, "user");
 
-            xmlSerializer.startTag(null, "userName");
+            xmlSerializer.startTag(null, "username");
             xmlSerializer.text(username);
-            xmlSerializer.endTag(null, "userName");
+            xmlSerializer.endTag(null, "username");
 
             xmlSerializer.startTag(null, "userId");
             xmlSerializer.text(userId);

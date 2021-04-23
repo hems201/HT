@@ -25,9 +25,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class PublicEntry extends Entry implements Serializable {
     Integer lBus, sBus, lTrain,sTrain, tram, metro;
-    Double busCO, trainCO, otherCO, totalCO;
-    Integer entryID;
-    Date date;
+    Double busCO, trainCO, otherCO;
+
 
     public PublicEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, ArrayList<Double> coList) {
         // open travelValues
