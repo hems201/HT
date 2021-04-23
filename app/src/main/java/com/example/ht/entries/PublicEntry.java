@@ -36,7 +36,7 @@ public class PublicEntry extends Entry implements Serializable {
         tram = travelValues.get(4); metro = travelValues.get(5);
 
         try {
-            date = new SimpleDateFormat("dd.MM.yyyy mm:ss").parse(oldDate);
+            date = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(oldDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }

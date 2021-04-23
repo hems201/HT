@@ -30,6 +30,7 @@ import javax.xml.transform.stream.StreamResult;
 public class EntryManager implements Serializable {
     //similar structure to UserManager
     //different lists for different types of entries
+    //TODO LISÄÄ TOAST JOKA NÄYTTÄÄ TOTAL CO:N
 
     private ArrayList<PublicEntry> publicEntryArray;
     private ArrayList<FlightEntry> flightEntryArray;
@@ -86,7 +87,7 @@ public class EntryManager implements Serializable {
                 appendCarEntry(userId, carEntryArray.get(carEntryArray.size()-1));
             }
         } else if (travelType == 2) {
-            System.out.println("adding flight entry");
+
             if (coList!=null) {
                 flightEntryArray.add(new FlightEntry(travelValues, idCounter, date, coList.get(0)));
             } else {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class User implements Serializable {
     String username;
     int userid;
-    private static EntryManager EM;
+    private EntryManager EM;
 
     public User(String n, int id, NodeList managerData) {
         System.out.println("USER CREATED");
@@ -23,6 +23,7 @@ public class User implements Serializable {
 
 
         if (managerData!=null && managerData.item(0)!=null) {
+            System.out.println("USER.JAVA EKA IF LAUSE");
             Node node = managerData.item(0);
             //parse managerData to EM
             if (node.getNodeType() == node.ELEMENT_NODE) {
@@ -41,8 +42,10 @@ public class User implements Serializable {
                     Node cnode = carList.item(i);
 
                     if (node.getNodeType() == cnode.ELEMENT_NODE) {
+                        coList = new ArrayList<Double>();
                         Element ce = (Element) cnode;
                         //get all entry information
+                        System.out.println("USER.JAVA get all entry information");
                         entryID = Integer.parseInt(ce.getElementsByTagName("EntryID").item(0).getTextContent());
                         String date = ce.getElementsByTagName("Date").item(0).getTextContent();
                         Double totalCO = Double.parseDouble(ce.getElementsByTagName("TotalCO").item(0).getTextContent());
@@ -61,11 +64,13 @@ public class User implements Serializable {
 
                 //initialize lists and go through flights
                 travelValues = new ArrayList<Integer>();
-                coList = new ArrayList<Double>();
+
                 for (int i=0; i<flightList.getLength(); i++) {
                     Node fnode = flightList.item(i);
 
                     if (node.getNodeType() == fnode.ELEMENT_NODE) {
+                        coList = new ArrayList<Double>();
+                        System.out.println("USER.JAVA get all entry information flights");
                         Element ce = (Element) fnode;
                         //get all entry information
                         entryID = Integer.parseInt(ce.getElementsByTagName("EntryID").item(0).getTextContent());
@@ -75,6 +80,7 @@ public class User implements Serializable {
                         Integer ca = Integer.parseInt(ce.getElementsByTagName("Ca").item(0).getTextContent());
                         Integer eu = Integer.parseInt(ce.getElementsByTagName("Eu").item(0).getTextContent());
                         Integer tra = Integer.parseInt(ce.getElementsByTagName("Tra").item(0).getTextContent());
+                        System.out.println("TOTAL CO IN USER.JAVA: "+ totalCO);
 
                         // add to respective lists
                         travelValues.add(fin); travelValues.add(eu);
@@ -88,12 +94,14 @@ public class User implements Serializable {
 
                 //initialize lists and go through publics
                 travelValues = new ArrayList<Integer>();
-                coList = new ArrayList<Double>();
+
                 for (int i=0; i<publicList.getLength(); i++) {
                     Node pnode = publicList.item(i);
 
                     if (node.getNodeType() == pnode.ELEMENT_NODE) {
+                        coList = new ArrayList<Double>();
                         Element ce = (Element) pnode;
+
                         //get all entry information
                         entryID = Integer.parseInt(ce.getElementsByTagName("EntryID").item(0).getTextContent());
                         String date = ce.getElementsByTagName("Date").item(0).getTextContent();
@@ -107,6 +115,7 @@ public class User implements Serializable {
                         Integer sTrain = Integer.parseInt(ce.getElementsByTagName("STrain").item(0).getTextContent());
                         Integer metro = Integer.parseInt(ce.getElementsByTagName("Metro").item(0).getTextContent());
                         Integer tram = Integer.parseInt(ce.getElementsByTagName("Tram").item(0).getTextContent());
+
 
                         // add to respective lists
                         travelValues.add(lBus); travelValues.add(sBus);
@@ -131,7 +140,7 @@ public class User implements Serializable {
         return userid;
     }
 
-    public static EntryManager getEM() {
+    public EntryManager getEM() {
         System.out.println("EM RETURNED");
         return EM;}
 

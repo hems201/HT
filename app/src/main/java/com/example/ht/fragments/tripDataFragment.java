@@ -23,6 +23,7 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
 
 import java.text.SimpleDateFormat;
@@ -36,6 +37,7 @@ public class tripDataFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //TODO TUUNAA GRAAFEJA
 
         view =  inflater.inflate(R.layout.fragment_trip_data, container, false);
         User user = (User) getArguments().getSerializable("user");
@@ -68,12 +70,15 @@ public class tripDataFragment extends Fragment {
             dp = getCarData(array);
         } else if (pos ==3) {
             ArrayList<FlightEntry> array = EM.getFlightEntryArray();
+            System.out.println(array.get(0).getTotalCO() + "<-- TOTAL COs --> " + array.get(1).getTotalCO());
+            System.out.println(array.get(0).getEntryID() + "<-- ID --> " + array.get(1).getEntryID());
+            System.out.println(array.get(0).getDate() + "<-- DATES --> " + array.get(1).getDate());
             dp = getFlightData(array);
         } else { dp=null;}
 
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -85,9 +90,24 @@ public class tripDataFragment extends Fragment {
             }
         });
 
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setYAxisBoundsManual(true);
+        int dpSize = dp.length;
+        Double maxX = dp[dpSize-1].getX();
+        Double minX = dp[0].getX();
+//        Double maxY = dp[dpSize-1].getY();
+//        graph.getViewport().setMinY(0);
+//        graph.getViewport().setMaxY(maxY);
+//        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMaxX(maxX);
+        graph.getViewport().setMinX(minX);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getGridLabelRenderer().setHumanRounding(false);
+        graph.getViewport().setScrollable(true);
+
+
+
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
+        series.setDrawDataPoints(true);
         graph.addSeries(series);
     }
 
@@ -152,10 +172,11 @@ public class tripDataFragment extends Fragment {
                 new DataPoint(2, publicSum),
                 new DataPoint(3, flightSum),
         });
+
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
         staticLabelsFormatter.setHorizontalLabels(new String[]{"Total CO", "Car", "Public Transport", "Flights"});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-        series.setSpacing(10);
+        series.setSpacing(40);
         graph.addSeries(series);
     }
 }
