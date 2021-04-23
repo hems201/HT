@@ -82,8 +82,8 @@ public class EntryManager implements Serializable {
             } else {
                 // this is a new entry
                 carEntryArray.add(new CarEntry(travelValues, idCounter, date, null));
-                //appendCarEntry(userId, carEntryArray.get(idCounter-1));
-                appendCarEntry(userId, carEntryArray.get(carEntryArray.size()-1)
+                //get the last entry and add to file
+                appendCarEntry(userId, carEntryArray.get(carEntryArray.size()-1));
             }
         } else if (travelType == 2) {
             System.out.println("adding flight entry");

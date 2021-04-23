@@ -78,25 +78,30 @@ public class FlightEntry extends Entry implements Serializable {
             int responseCode = con.getResponseCode();
             System.out.println(responseCode);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
+            // get TotalCO if request success
+            if (responseCode==200) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = br.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                br.close();
+                con.disconnect();
+
+                // fix encoding
+                String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
+
+                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                        .parse(new InputSource(new StringReader(responseString)));
+
+                System.out.println(doc.getDocumentElement().getNodeName());
+
+                totalCO = Double.parseDouble(doc.getDocumentElement().getTextContent());
+            }else{
+                //TODO toast unsuccessful request
+               totalCO = 0.0;
             }
-            br.close();
-            con.disconnect();
-
-            // fix encoding
-            String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
-
-            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                    .parse(new InputSource(new StringReader(responseString)));
-
-            System.out.println(doc.getDocumentElement().getNodeName());
-
-            totalCO = Double.parseDouble(doc.getDocumentElement().getTextContent());
-
             System.out.println("totalCO: " + totalCO);
 
         } catch (IOException | SAXException | ParserConfigurationException e) {
