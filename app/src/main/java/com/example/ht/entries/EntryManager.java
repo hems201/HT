@@ -82,7 +82,8 @@ public class EntryManager implements Serializable {
             } else {
                 // this is a new entry
                 carEntryArray.add(new CarEntry(travelValues, idCounter, date, null));
-                appendCarEntry(userId, carEntryArray.get(idCounter-1));
+                //appendCarEntry(userId, carEntryArray.get(idCounter-1));
+                appendCarEntry(userId, carEntryArray.get(carEntryArray.size()-1)
             }
         } else if (travelType == 2) {
             System.out.println("adding flight entry");
@@ -91,7 +92,7 @@ public class EntryManager implements Serializable {
             } else {
                 // this is a new entry
                 flightEntryArray.add(new FlightEntry(travelValues, idCounter, date, null));
-                appendFlightEntry(userId, flightEntryArray.get(idCounter-1));
+                appendFlightEntry(userId, flightEntryArray.get(flightEntryArray.size()-1));
             }
         } else if (travelType == 3) {
             System.out.println("adding public entry");
@@ -101,7 +102,7 @@ public class EntryManager implements Serializable {
             } else {
                 // this is a new entry
                 publicEntryArray.add(new PublicEntry(travelValues, idCounter, date, null));
-                appendPublicEntry(userId, publicEntryArray.get(idCounter-1));
+                appendPublicEntry(userId, publicEntryArray.get(publicEntryArray.size()-1));
             }
         }
     }

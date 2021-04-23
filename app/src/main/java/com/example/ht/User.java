@@ -73,7 +73,7 @@ public class User implements Serializable {
                         Double totalCO = Double.parseDouble(ce.getElementsByTagName("TotalCO").item(0).getTextContent());
                         Integer fin = Integer.parseInt(ce.getElementsByTagName("Fin").item(0).getTextContent());
                         Integer ca = Integer.parseInt(ce.getElementsByTagName("Ca").item(0).getTextContent());
-                        Integer eu = Integer.parseInt(ce.getElementsByTagName("EU").item(0).getTextContent());
+                        Integer eu = Integer.parseInt(ce.getElementsByTagName("Eu").item(0).getTextContent());
                         Integer tra = Integer.parseInt(ce.getElementsByTagName("Tra").item(0).getTextContent());
 
                         // add to respective lists
