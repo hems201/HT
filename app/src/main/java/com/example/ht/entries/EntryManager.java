@@ -1,5 +1,7 @@
 package com.example.ht.entries;
 
+import android.widget.Toast;
+
 import com.example.ht.ContextProvider;
 import com.example.ht.User;
 
@@ -85,6 +87,8 @@ public class EntryManager implements Serializable {
                 carEntryArray.add(new CarEntry(travelValues, idCounter, date, null));
                 //get the last entry and add to file
                 appendCarEntry(userId, carEntryArray.get(carEntryArray.size()-1));
+                //Show total CO2 with toast
+                Toast.makeText(ContextProvider.getContext(),"Car trip added. Total CO2: " + Math.round(carEntryArray.get(carEntryArray.size()-1).getTotalCO())+"kg", Toast.LENGTH_LONG).show();
             }
         } else if (travelType == 2) {
 
@@ -94,6 +98,8 @@ public class EntryManager implements Serializable {
                 // this is a new entry
                 flightEntryArray.add(new FlightEntry(travelValues, idCounter, date, null));
                 appendFlightEntry(userId, flightEntryArray.get(flightEntryArray.size()-1));
+                //Show total CO2 with toast
+                Toast.makeText(ContextProvider.getContext(),"Flight added. Total CO2: " + Math.round(flightEntryArray.get(flightEntryArray.size()-1).getTotalCO())+"kg", Toast.LENGTH_LONG).show();
             }
         } else if (travelType == 3) {
             System.out.println("adding public entry");
@@ -104,6 +110,8 @@ public class EntryManager implements Serializable {
                 // this is a new entry
                 publicEntryArray.add(new PublicEntry(travelValues, idCounter, date, null));
                 appendPublicEntry(userId, publicEntryArray.get(publicEntryArray.size()-1));
+                //Show total CO2 with toast
+                Toast.makeText(ContextProvider.getContext(),"Public transport trip added. Total CO2: " + Math.round(publicEntryArray.get(publicEntryArray.size()-1).getTotalCO())+"kg", Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -21,7 +21,7 @@ public class addUserFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_add_user, container, false);
+        view = inflater.inflate(R.layout.fragment_add_user, container, false);
 
         //CreateUserBtn set up
         Button createUserBtn = view.findViewById(R.id.createUserBtn);
@@ -40,25 +40,13 @@ public class addUserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         System.out.println("user fragment view created\n");
-
     }
 
-    //Sends the userinfo to the Mainactivity
+    //Sends the userinfo to the MainActivity
     public void createUser(String name) {
         Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
         UserManager UM = UserManager.getInstance();
         UM.addUser(name);
         startActivity(intent);
     }
-
-
-
-
-    //Sends the userinfo to the Mainactivity
-//    public void sendInfo(String name) {
-//        Intent intent = new Intent(getActivity().getBaseContext(),MainActivity.class);
-//        intent.putExtra("key", name);
-//        System.out.println(name + " fragmentista");
-//        startActivity(intent);
-//    }
 }

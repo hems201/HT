@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        // Define buttons and spinenr from layout
         Button addUserBtn = findViewById(R.id.addUserBtn);
         Button logInBtn = findViewById(R.id.logInBtn);
         Spinner userSpinner = findViewById(R.id.userSpinner);
@@ -36,16 +37,15 @@ public class MainActivity extends AppCompatActivity {
         UserManager UM = UserManager.getInstance();
 
         //Log in button set up
-
         View.OnClickListener lis = v -> {
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             User user = (User) userSpinner.getSelectedItem();
             System.out.println(user.getUserid());
 
+            //send userinfo
             Bundle nbundle = new Bundle();
             nbundle.putSerializable("user", user);
             intent.putExtras(nbundle);
-            System.out.println("User sent from main activity to menu activity");
             startActivity(intent);
         };
         logInBtn.setOnClickListener(lis);
@@ -66,16 +66,16 @@ public class MainActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userSpinner.setAdapter(spinnerAdapter);
 
-        userSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //User user = (User) userSpinner.getSelectedItem();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        userSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                //User user = (User) userSpinner.getSelectedItem();
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
     }

@@ -30,7 +30,7 @@ public class MenuActivity extends AppCompatActivity {
         //TripDataSpinner set up
         Spinner tripDataSpinner = findViewById(R.id.tripDataSpinner);
         List<String> trip_data_list = new  ArrayList<>();
-        trip_data_list.add("Select");
+        trip_data_list.add("Select data");
         trip_data_list.add("Public Transport");
         trip_data_list.add("Car");
         trip_data_list.add("Flight");
@@ -43,10 +43,10 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int pos = tripDataSpinner.getSelectedItemPosition();
-                System.out.println("ITEM SELECTED");
+                // If position is other than "Select" go to tripDataFragment for graphs
                 if (pos > 0) {
-                    System.out.println("GRAPH FRAGMENT GETTING STARTED");
                     Fragment frag = new tripDataFragment();
+                    // Send spinner position and user to tripDataFragment and launch fragment
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", user);
                     bundle.putInt("position",pos);
@@ -55,15 +55,11 @@ public class MenuActivity extends AppCompatActivity {
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.replace(R.id.fragmentFrameMenu, frag);
                     transaction.commit();
-                    System.out.println("GRAPH FRAGMENT COMMITTED");
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+            public void onNothingSelected(AdapterView<?> parent) {}});
 
         //AddTripSpinner set up
         Spinner addTripSpinner = findViewById(R.id. addTripSpinner);
@@ -83,6 +79,7 @@ public class MenuActivity extends AppCompatActivity {
                 int pos = addTripSpinner.getSelectedItemPosition();
                 Fragment frag = null;
 
+                // Launch correct fragment based on spinner position
                 if (pos >= 1) {
                     if (pos == 1) {
                         frag = new publicEntryFragment();
@@ -97,6 +94,7 @@ public class MenuActivity extends AppCompatActivity {
                         System.out.println("Opening flight");
                     }
 
+                    // Send user info to fragment and launch fragment
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", user);
                     assert frag != null;
@@ -110,17 +108,13 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+            public void onNothingSelected(AdapterView<?> parent) {}});
     }
 
     @Override
     public void onStart() {
+        // Get user when activity is started
         super.onStart();
         user = (User) getIntent().getExtras().getSerializable("user");
-        System.out.println("user mainactivitysta menuun;" + user.getUserid());
-
     }
 }

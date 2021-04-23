@@ -29,6 +29,7 @@ public class carEntryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // get user from MenuActivity
         assert getArguments() != null;
         user = (User) getArguments().getSerializable("user");
         view =  inflater.inflate(R.layout.fragment_car_entry, container, false);
@@ -74,6 +75,7 @@ public class carEntryFragment extends Fragment {
         EM.addEntry(1, travelValues, 0,
                 sdf.format(Calendar.getInstance().getTime()), null, user.getUserid());
 
+        // send user data
         Bundle nbundle = new Bundle();
         nbundle.putSerializable("user", user);
         intent.putExtras(nbundle);
