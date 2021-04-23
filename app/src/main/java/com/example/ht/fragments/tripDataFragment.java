@@ -85,6 +85,8 @@ public class tripDataFragment extends Fragment {
             }
         });
 
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setYAxisBoundsManual(true);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
         graph.addSeries(series);
     }

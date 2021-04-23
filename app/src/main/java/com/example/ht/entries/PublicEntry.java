@@ -42,7 +42,7 @@ public class PublicEntry extends Entry implements Serializable {
         }
 
         // see if CO are already included
-        if (coList.size()!=0) {
+        if (coList!=null) {
             totalCO = coList.get(0); busCO = coList.get(1);
             trainCO = coList.get(2); otherCO = coList.get(3);
         } else {

@@ -74,10 +74,13 @@ public class flightEntryFragment extends Fragment {
 
         // get the user's entry manager
         EntryManager EM = user.getEM();
-        SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy mm:ss");
         EM.addEntry(2, travelValues, 0, sdf.format(Calendar.getInstance().getTime()), null,  user.getUserid());
 
 
+        Bundle nbundle = new Bundle();
+        nbundle.putSerializable("user", user);
+        intent.putExtras(nbundle);
         startActivity(intent);
     }
 
