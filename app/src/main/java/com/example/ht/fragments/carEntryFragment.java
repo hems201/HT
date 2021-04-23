@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.ht.ContextProvider;
 import com.example.ht.MenuActivity;
 import com.example.ht.R;
 import com.example.ht.User;
@@ -42,14 +44,18 @@ public class carEntryFragment extends Fragment {
         Button addCarBtn = view.findViewById(R.id.addCarEntry);
         addCarBtn.setOnClickListener(v -> {
             //get text input contents
-            int km = Integer.parseInt(String.valueOf(editDriveDist.getText()));
-            int carYear = Integer.parseInt(String.valueOf(editCarYear.getText()));
-            int passengers = Integer.parseInt(String.valueOf(editPassengers.getText()));
+            try {
+                int km = Integer.parseInt(String.valueOf(editDriveDist.getText()));
+                int carYear = Integer.parseInt(String.valueOf(editCarYear.getText()));
+                int passengers = Integer.parseInt(String.valueOf(editPassengers.getText()));
 
-            //create a new entry and close fragment
-            createCarEntry(km, carYear, passengers);
+                //create a new entry and close fragment
+                createCarEntry(km, carYear, passengers);
+            } catch(NumberFormatException e) {
+                e.printStackTrace();
+                Toast.makeText(ContextProvider.getContext(),"Please fill all fields before submitting.", Toast.LENGTH_LONG).show();
+            }
         });
-
 
         return view;
     }

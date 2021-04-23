@@ -1,5 +1,9 @@
 package com.example.ht.entries;
 
+import android.widget.Toast;
+
+import com.example.ht.ContextProvider;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -86,7 +90,7 @@ public class PublicEntry extends Entry implements Serializable {
             if (responseCode==200) {
                 countTotalCO(con);
             } else {
-                //TODO toast unsuccessful request
+                Toast.makeText(ContextProvider.getContext(),"There was a problem with your input. Please try again.", Toast.LENGTH_LONG).show();
                 totalCO = 0.0;
                 busCO = 0.0;
                 trainCO = 0.0;

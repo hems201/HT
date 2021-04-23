@@ -1,5 +1,9 @@
 package com.example.ht.entries;
 
+import android.widget.Toast;
+
+import com.example.ht.ContextProvider;
+
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -75,8 +79,8 @@ public class FlightEntry extends Entry implements Serializable {
             if (responseCode==200) {
                 countTotalCO(con);
             }else{
-                //TODO toast unsuccessful request
-               totalCO = 0.0;
+                Toast.makeText(ContextProvider.getContext(),"There was a problem with your input. Please try again.", Toast.LENGTH_LONG).show();
+                totalCO = 0.0;
             }
             con.disconnect();
             System.out.println("totalCO: " + totalCO);

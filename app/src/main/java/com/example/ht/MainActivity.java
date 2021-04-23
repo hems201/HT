@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        // Define buttons and spinenr from layout
+        // Define buttons and spinner from layout
         Button addUserBtn = findViewById(R.id.addUserBtn);
         Button logInBtn = findViewById(R.id.logInBtn);
         Spinner userSpinner = findViewById(R.id.userSpinner);
