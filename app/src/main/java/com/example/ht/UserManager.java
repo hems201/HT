@@ -37,19 +37,19 @@ public class UserManager implements Serializable {
     String path = ContextProvider.getContext().getFilesDir().getAbsolutePath();
     File file = new File(path + "/users.xml");
 
-
     //Singleton:
     private static UserManager UM = new UserManager();
     private UserManager() {
         user_array = new ArrayList<>();
 
-        // add all users to ArrayList
+        // add all users from file to ArrayList
         readFile();
     }
     public static UserManager getInstance() {return UM;}
 
 
     public void addUser(String name) {
+        // add new user to array & file
         idCounter ++;
         User user = new User(name, idCounter, null);
         user_array.add(user);
@@ -57,6 +57,7 @@ public class UserManager implements Serializable {
         System.out.println("Created user " + name);
 
         if (idCounter==1) {
+            //new file
             writeFile(name);
         } else {
             //update the user file
@@ -69,7 +70,6 @@ public class UserManager implements Serializable {
         //read all users in file users.xml as UserManager is created
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-
             InputStream istream = ContextProvider.getContext().openFileInput(xmlFile);
             Document doc1 = builder.parse(istream);
 
@@ -89,7 +89,6 @@ public class UserManager implements Serializable {
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
-
     }
 
     private void parseNode(NodeList nList) {
@@ -137,7 +136,7 @@ public class UserManager implements Serializable {
             Element man = doc.createElement("EntryManager");
             user.appendChild(man);
 
-            //add user to file
+            //add user to file under userdata
             userData.appendChild(user);
 
             TransformerFactory tff = TransformerFactory.newInstance();
@@ -147,8 +146,7 @@ public class UserManager implements Serializable {
             tf.transform(source, res);
 
             System.out.println("added to file user " + username);
-
-
+            idCounter++;
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -164,8 +162,6 @@ public class UserManager implements Serializable {
 
     public void writeFile(String username) {
         //Write a new created user into new file users.xml
-        String userId = "1";
-
         try {
             FileOutputStream fileos= ContextProvider.getContext().openFileOutput(xmlFile, Context.MODE_PRIVATE);
             XmlSerializer xmlSerializer = Xml.newSerializer();
@@ -176,22 +172,22 @@ public class UserManager implements Serializable {
 
             xmlSerializer.startTag(null, "userData");
 
-            // add new user
-            xmlSerializer.startTag(null, "user");
+                // add new user
+                xmlSerializer.startTag(null, "user");
 
-            xmlSerializer.startTag(null, "username");
-            xmlSerializer.text(username);
-            xmlSerializer.endTag(null, "username");
+                xmlSerializer.startTag(null, "username");
+                xmlSerializer.text(username);
+                xmlSerializer.endTag(null, "username");
 
-            xmlSerializer.startTag(null, "userId");
-            xmlSerializer.text(userId);
-            xmlSerializer.endTag(null, "userId");
+                xmlSerializer.startTag(null, "userId");
+                xmlSerializer.text("1");
+                xmlSerializer.endTag(null, "userId");
 
-            xmlSerializer.startTag(null, "EntryManager");
-            xmlSerializer.endTag(null, "EntryManager");
+                //new user has no entries yet
+                xmlSerializer.startTag(null, "EntryManager");
+                xmlSerializer.endTag(null, "EntryManager");
 
-            //new user has no entries yet
-            xmlSerializer.endTag(null, "user");
+                xmlSerializer.endTag(null, "user");
 
             xmlSerializer.endTag(null, "userData");
 
@@ -221,16 +217,12 @@ public class UserManager implements Serializable {
 
     public void deleteUser(){
         // delete from array and file
+        //optional
     }
 
     public ArrayList<User> getUser_array() {
         return user_array;
     }
-
-//    public User getUser(){
-//        return User;
-//    }
-
 }
 
 

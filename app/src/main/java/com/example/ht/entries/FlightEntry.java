@@ -24,9 +24,8 @@ public class FlightEntry extends Entry implements Serializable {
     Integer planeFin, planeEu, planeCa, planeTra;
 
     public FlightEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, Double co) {
-        //open travelValues
-
         entryID = id;
+        //open travelValues
         planeFin = travelValues.get(0);
         planeEu = travelValues.get(1);
         planeCa = travelValues.get(2);
@@ -42,7 +41,7 @@ public class FlightEntry extends Entry implements Serializable {
         if (co!=null) {
             totalCO = co;
         } else {
-            countTotalCO();
+            readXML();
         }
     }
 
@@ -52,7 +51,7 @@ public class FlightEntry extends Entry implements Serializable {
     public Integer getPlaneTra(){return planeTra;}
 
     @Override
-    public void countTotalCO() {
+    public void readXML() {
         // make request url
         String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/FlightEstimate?"
                 + "finland=" + planeFin
@@ -60,14 +59,8 @@ public class FlightEntry extends Entry implements Serializable {
                 + "&canary=" + planeCa
                 + "&transcontinental=" + planeTra;
         System.out.println(url);
-        // send request
-        readXML(url);
-    }
 
-    @Override
-    public void readXML(String url) {
         //send request to ilmastodieetti to calculate CO2
-        //parse the emission values from the response document
         try {
             // https://chillyfacts.com/java-send-url-http-request-read-xml-response/
             URL obj = new URL(url);
@@ -80,32 +73,45 @@ public class FlightEntry extends Entry implements Serializable {
 
             // get TotalCO if request success
             if (responseCode==200) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-                while ((inputLine = br.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                br.close();
-                con.disconnect();
-
-                // fix encoding
-                String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
-
-                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                        .parse(new InputSource(new StringReader(responseString)));
-
-                System.out.println(doc.getDocumentElement().getNodeName());
-
-                totalCO = Double.parseDouble(doc.getDocumentElement().getTextContent());
+                countTotalCO(con);
             }else{
                 //TODO toast unsuccessful request
                totalCO = 0.0;
             }
+            con.disconnect();
             System.out.println("totalCO: " + totalCO);
 
-        } catch (IOException | SAXException | ParserConfigurationException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void countTotalCO(HttpURLConnection con) {
+        totalCO = 0.0;
+        //parse the emission values from the response document
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            con.disconnect();
+
+            // fix encoding
+            String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
+
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                    .parse(new InputSource(new StringReader(responseString)));
+
+            System.out.println(doc.getDocumentElement().getNodeName());
+
+            totalCO = Double.parseDouble(doc.getDocumentElement().getTextContent());
+        } catch (IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+        }
+        con.disconnect();
     }
 }

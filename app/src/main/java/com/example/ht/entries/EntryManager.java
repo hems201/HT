@@ -26,7 +26,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-
 public class EntryManager implements Serializable {
     //similar structure to UserManager
     //different lists for different types of entries
@@ -52,7 +51,6 @@ public class EntryManager implements Serializable {
     public void readEntries() {
         //return all entries
     }
-
     public void getEntry(String entryID) {
         //
     }
@@ -66,10 +64,11 @@ public class EntryManager implements Serializable {
         return flightEntryArray;
     }
 
-
     public void addEntry(int travelType, ArrayList<Integer> travelValues, int maybeId, String date, ArrayList<Double> coList, int userId) {
         //save new entry to correct entryArray and userdata file
-        // takes co arraylist, where depending on entry type has either one or multiple variables
+        // takes coList, where depending on entry type has either one or multiple variables
+
+        // id included if entry is from file
         if (maybeId==0) {
             idCounter++;
         } else {
@@ -79,15 +78,16 @@ public class EntryManager implements Serializable {
         if (travelType == 1) {
             System.out.println("adding car entry");
             if (coList!=null) {
+                //old entry, add to array
                 carEntryArray.add(new CarEntry(travelValues, idCounter, date, coList.get(0)));
             } else {
-                // this is a new entry
+                // this is a new entry -> add to array
                 carEntryArray.add(new CarEntry(travelValues, idCounter, date, null));
-                //get the last entry and add to file
+                //get that last entry and add it to file
                 appendCarEntry(userId, carEntryArray.get(carEntryArray.size()-1));
             }
         } else if (travelType == 2) {
-
+            System.out.println("adding flight entry");
             if (coList!=null) {
                 flightEntryArray.add(new FlightEntry(travelValues, idCounter, date, coList.get(0)));
             } else {
@@ -108,14 +108,15 @@ public class EntryManager implements Serializable {
         }
     }
 
-    public void appendCarEntry(int userId, CarEntry carEntry) {
-        // add new CarEntry do userdata file
+    public void appendCarEntry(int userId, CarEntry newEntry) {
+        // add new CarEntry to userdata file
+        //TODO CODE SOURCE
         try {
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
             Document doc = docBuilder.parse(file);
 
-            // get right user
+            // get correct user
             NodeList userList = doc.getElementsByTagName("user");
             Node thisUser;
             for (int i=0; i<userList.getLength(); i++) {
@@ -130,32 +131,34 @@ public class EntryManager implements Serializable {
                     //create new entry
                     Element entry = doc.createElement("CarEntry");
 
-                    Element entryID = doc.createElement("EntryID");
-                    entryID.appendChild(doc.createTextNode(Integer.toString(carEntry.getEntryID())));
-                    entry.appendChild(entryID);
+                    Element e = doc.createElement("EntryID");
+                    e.appendChild(doc.createTextNode(Integer.toString(newEntry.getEntryID())));
+                    entry.appendChild(e);
 
-                    Element entryDate = doc.createElement("Date");
-                    entryDate.appendChild(doc.createTextNode(carEntry.getDate()));
-                    entry.appendChild(entryDate);
+                    e = doc.createElement("Date");
+                    e.appendChild(doc.createTextNode(newEntry.getDate()));
+                    entry.appendChild(e);
 
-                    Element entryCO = doc.createElement("TotalCO");
-                    entryCO.appendChild(doc.createTextNode(String.valueOf(carEntry.getTotalCO())));
-                    entry.appendChild(entryCO);
+                    e = doc.createElement("TotalCO");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getTotalCO())));
+                    entry.appendChild(e);
 
-                    Element carYear = doc.createElement("CarYear");
-                    carYear.appendChild(doc.createTextNode(String.valueOf(carEntry.getCarYear())));
-                    entry.appendChild(carYear);
+                    e = doc.createElement("CarYear");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getCarYear())));
+                    entry.appendChild(e);
 
-                    Element km = doc.createElement("Km");
-                    km.appendChild(doc.createTextNode(String.valueOf(carEntry.getKm())));
-                    entry.appendChild(km);
+                    e = doc.createElement("Km");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getKm())));
+                    entry.appendChild(e);
 
-                    Element pass = doc.createElement("Passengers");
-                    pass.appendChild(doc.createTextNode(String.valueOf(carEntry.getPassengers())));
-                    entry.appendChild(pass);
+                    e = doc.createElement("Passengers");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getPassengers())));
+                    entry.appendChild(e);
 
+                    // add entry under manager in file
                     manager.appendChild(entry);
 
+                    // ??
                     TransformerFactory tff = TransformerFactory.newInstance();
                     Transformer tf = tff.newTransformer();
                     DOMSource source = new DOMSource(doc);
@@ -178,7 +181,7 @@ public class EntryManager implements Serializable {
             e.printStackTrace();
         }
     }
-    public void appendFlightEntry(int userId, FlightEntry flightEntry) {
+    public void appendFlightEntry(int userId, FlightEntry newEntry) {
         // add new FlightEntry do userdata file
         try {
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
@@ -200,34 +203,35 @@ public class EntryManager implements Serializable {
                     //create new entry
                     Element entry = doc.createElement("FlightEntry");
 
-                    Element entryID = doc.createElement("EntryID");
-                    entryID.appendChild(doc.createTextNode(Integer.toString(flightEntry.getEntryID())));
-                    entry.appendChild(entryID);
+                    Element e = doc.createElement("EntryID");
+                    e.appendChild(doc.createTextNode(Integer.toString(newEntry.getEntryID())));
+                    entry.appendChild(e);
 
-                    Element entryDate = doc.createElement("Date");
-                    entryDate.appendChild(doc.createTextNode(flightEntry.getDate()));
-                    entry.appendChild(entryDate);
+                    e = doc.createElement("Date");
+                    e.appendChild(doc.createTextNode(newEntry.getDate()));
+                    entry.appendChild(e);
 
-                    Element entryCO = doc.createElement("TotalCO");
-                    entryCO.appendChild(doc.createTextNode(String.valueOf(flightEntry.getTotalCO())));
-                    entry.appendChild(entryCO);
+                    e = doc.createElement("TotalCO");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getTotalCO())));
+                    entry.appendChild(e);
 
-                    Element f = doc.createElement("Fin");
-                    f.appendChild(doc.createTextNode(String.valueOf(flightEntry.getPlaneFin())));
-                    entry.appendChild(f);
+                    e = doc.createElement("Fin");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getPlaneFin())));
+                    entry.appendChild(e);
 
-                    Element km = doc.createElement("Ca");
-                    km.appendChild(doc.createTextNode(String.valueOf(flightEntry.getPlaneCa())));
-                    entry.appendChild(km);
+                    e = doc.createElement("Ca");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getPlaneCa())));
+                    entry.appendChild(e);
 
-                    Element eu = doc.createElement("Eu");
-                    eu.appendChild(doc.createTextNode(String.valueOf(flightEntry.getPlaneEu())));
-                    entry.appendChild(eu);
+                    e = doc.createElement("Eu");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getPlaneEu())));
+                    entry.appendChild(e);
 
-                    Element t = doc.createElement("Tra");
-                    t.appendChild(doc.createTextNode(String.valueOf(flightEntry.getPlaneTra())));
-                    entry.appendChild(t);
+                    e = doc.createElement("Tra");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getPlaneTra())));
+                    entry.appendChild(e);
 
+                    // add entry under manager in file
                     manager.appendChild(entry);
 
                     TransformerFactory tff = TransformerFactory.newInstance();
@@ -239,7 +243,6 @@ public class EntryManager implements Serializable {
                     System.out.println("added new flight entry to file");
                 }
             }
-
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -252,7 +255,8 @@ public class EntryManager implements Serializable {
             e.printStackTrace();
         }
     }
-    public void appendPublicEntry(int userId, PublicEntry publicEntry) {
+
+    public void appendPublicEntry(int userId, PublicEntry newEntry) {
         // add new PublicEntry do userdata file
         try {
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
@@ -275,53 +279,54 @@ public class EntryManager implements Serializable {
                     Element entry = doc.createElement("PublicEntry");
 
                     Element e = doc.createElement("EntryID");
-                    e.appendChild(doc.createTextNode(Integer.toString(publicEntry.getEntryID())));
+                    e.appendChild(doc.createTextNode(Integer.toString(newEntry.getEntryID())));
                     entry.appendChild(e);
 
-                    Element entryDate = doc.createElement("Date");
-                    entryDate.appendChild(doc.createTextNode(publicEntry.getDate()));
-                    entry.appendChild(entryDate);
+                    e = doc.createElement("Date");
+                    e.appendChild(doc.createTextNode(newEntry.getDate()));
+                    entry.appendChild(e);
 
-                    Element entryCO = doc.createElement("TotalCO");
-                    entryCO.appendChild(doc.createTextNode(String.valueOf(publicEntry.getTotalCO())));
-                    entry.appendChild(entryCO);
+                    e = doc.createElement("TotalCO");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getTotalCO())));
+                    entry.appendChild(e);
 
-                    Element b = doc.createElement("BusCO");
-                    b.appendChild(doc.createTextNode(String.valueOf(publicEntry.getBusCO())));
-                    entry.appendChild(b);
+                    e = doc.createElement("BusCO");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getBusCO())));
+                    entry.appendChild(e);
 
-                    Element t = doc.createElement("TrainCO");
-                    t.appendChild(doc.createTextNode(String.valueOf(publicEntry.getTrainCO())));
-                    entry.appendChild(t);
+                    e = doc.createElement("TrainCO");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getTrainCO())));
+                    entry.appendChild(e);
 
-                    Element eu = doc.createElement("OtherCO");
-                    eu.appendChild(doc.createTextNode(String.valueOf(publicEntry.getOtherCO())));
-                    entry.appendChild(eu);
+                    e = doc.createElement("OtherCO");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getOtherCO())));
+                    entry.appendChild(e);
 
-                    Element km = doc.createElement("LBus");
-                    km.appendChild(doc.createTextNode(String.valueOf(publicEntry.getlBus())));
-                    entry.appendChild(km);
+                    e = doc.createElement("LBus");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getlBus())));
+                    entry.appendChild(e);
 
-                    Element a = doc.createElement("SBus");
-                    a.appendChild(doc.createTextNode(String.valueOf(publicEntry.getsBus())));
-                    entry.appendChild(a);
+                    e = doc.createElement("SBus");
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getsBus())));
+                    entry.appendChild(e);
 
                     e = doc.createElement("LTrain");
-                    e.appendChild(doc.createTextNode(String.valueOf(publicEntry.getlTrain())));
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getlTrain())));
                     entry.appendChild(e);
 
                     e = doc.createElement("STrain");
-                    e.appendChild(doc.createTextNode(String.valueOf(publicEntry.getsTrain())));
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getsTrain())));
                     entry.appendChild(e);
 
                     e = doc.createElement("Metro");
-                    e.appendChild(doc.createTextNode(String.valueOf(publicEntry.getMetro())));
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getMetro())));
                     entry.appendChild(e);
 
                     e = doc.createElement("Tram");
-                    e.appendChild(doc.createTextNode(String.valueOf(publicEntry.getTram())));
+                    e.appendChild(doc.createTextNode(String.valueOf(newEntry.getTram())));
                     entry.appendChild(e);
 
+                    // add entry under manager in file
                     manager.appendChild(entry);
 
                     TransformerFactory tff = TransformerFactory.newInstance();
@@ -333,7 +338,6 @@ public class EntryManager implements Serializable {
                     System.out.println("added new public entry to file");
                 }
             }
-
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -350,5 +354,4 @@ public class EntryManager implements Serializable {
     public void deleteEntry(String entryID) {
         //optional
     }
-
 }

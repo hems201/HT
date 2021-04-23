@@ -21,10 +21,10 @@ public class User implements Serializable {
         EM = new EntryManager();
         System.out.println("EM CREATED");
 
-
+        //READ ENTRY DATA FROM FILE
         if (managerData!=null && managerData.item(0)!=null) {
-            System.out.println("USER.JAVA EKA IF LAUSE");
             Node node = managerData.item(0);
+
             //parse managerData to EM
             if (node.getNodeType() == node.ELEMENT_NODE) {
                 Element e = (Element) node;
@@ -33,13 +33,16 @@ public class User implements Serializable {
                 NodeList flightList = e.getElementsByTagName("FlightEntry");
                 NodeList publicList = e.getElementsByTagName("PublicEntry");
 
-                int entryID=0;
-                ArrayList<Integer> travelValues = new ArrayList<Integer>();
-                ArrayList<Double> coList = new ArrayList<Double>();
+                int entryID;
+                ArrayList<Integer> travelValues;
+                ArrayList<Double> coList;
 
                 // go through cars
                 for (int i=0; i<carList.getLength(); i++) {
                     Node cnode = carList.item(i);
+                    //reset lists
+                    travelValues = new ArrayList<Integer>();
+                    coList = new ArrayList<Double>();
 
                     if (node.getNodeType() == cnode.ELEMENT_NODE) {
                         coList = new ArrayList<Double>();
@@ -57,16 +60,19 @@ public class User implements Serializable {
                         travelValues.add(km); travelValues.add(carYear);
                         travelValues.add(passengers); coList.add(totalCO);
 
+                        System.out.println("totalco from file: "+ totalCO);
+
                         //pass to manager
                         EM.addEntry(1, travelValues, entryID, date, coList, userid);
                     }
                 }
 
                 //initialize lists and go through flights
-                travelValues = new ArrayList<Integer>();
-
                 for (int i=0; i<flightList.getLength(); i++) {
                     Node fnode = flightList.item(i);
+                    //reset lists
+                    travelValues = new ArrayList<Integer>();
+                    coList = new ArrayList<Double>();
 
                     if (node.getNodeType() == fnode.ELEMENT_NODE) {
                         coList = new ArrayList<Double>();
@@ -87,16 +93,19 @@ public class User implements Serializable {
                         travelValues.add(ca); travelValues.add(tra);
                         coList.add(totalCO);
 
+                        System.out.println("totalco from file: "+ totalCO);
+
                         //pass to manager
                         EM.addEntry(2, travelValues, entryID, date, coList, userid);
                     }
                 }
 
                 //initialize lists and go through publics
-                travelValues = new ArrayList<Integer>();
-
                 for (int i=0; i<publicList.getLength(); i++) {
                     Node pnode = publicList.item(i);
+                    //reset lists
+                    travelValues = new ArrayList<Integer>();
+                    coList = new ArrayList<Double>();
 
                     if (node.getNodeType() == pnode.ELEMENT_NODE) {
                         coList = new ArrayList<Double>();
@@ -116,7 +125,6 @@ public class User implements Serializable {
                         Integer metro = Integer.parseInt(ce.getElementsByTagName("Metro").item(0).getTextContent());
                         Integer tram = Integer.parseInt(ce.getElementsByTagName("Tram").item(0).getTextContent());
 
-
                         // add to respective lists
                         travelValues.add(lBus); travelValues.add(sBus);
                         travelValues.add(lTrain); travelValues.add(sTrain);
@@ -124,16 +132,14 @@ public class User implements Serializable {
                         coList.add(totalCO); coList.add(busCO);
                         coList.add(trainCO); coList.add(otherCO);
 
+                        System.out.println("totalco from file: "+ totalCO);
+
                         //pass to manager
                         EM.addEntry(3, travelValues, entryID, date, coList, userid);
                     }
                 }
             }
         }
-    }
-
-    public String getUsername(){
-        return username;
     }
 
     public int getUserid() {

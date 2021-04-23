@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         UserManager UM = UserManager.getInstance();
 
         //Log in button set up
-
         View.OnClickListener lis = v -> {
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             User user = (User) userSpinner.getSelectedItem();
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 }

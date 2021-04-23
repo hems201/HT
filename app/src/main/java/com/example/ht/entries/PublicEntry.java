@@ -27,7 +27,6 @@ public class PublicEntry extends Entry implements Serializable {
     Integer lBus, sBus, lTrain,sTrain, tram, metro;
     Double busCO, trainCO, otherCO;
 
-
     public PublicEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, ArrayList<Double> coList) {
         // open travelValues
         entryID = id;
@@ -46,9 +45,10 @@ public class PublicEntry extends Entry implements Serializable {
             totalCO = coList.get(0); busCO = coList.get(1);
             trainCO = coList.get(2); otherCO = coList.get(3);
         } else {
-            countTotalCO();
+            readXML();
         }
     }
+
     public Integer getlBus(){return lBus;}
     public Integer getsBus(){return sBus;}
     public Integer getlTrain(){return lTrain;}
@@ -60,7 +60,7 @@ public class PublicEntry extends Entry implements Serializable {
     public Double getTrainCO() {return trainCO;}
 
     @Override
-    public void countTotalCO() {
+    public void readXML() {
         //make request url from values
         String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/PublicTransportEstimate?"
                 + "longDistanceBusYear=" +  lBus
@@ -70,14 +70,8 @@ public class PublicEntry extends Entry implements Serializable {
                 + "&cityBusWeek=" + sBus
                 + "&cityTrainWeek=" + sTrain;
         System.out.println(url);
-        // send request
-        readXML(url);
-    }
 
-    @Override
-    public void readXML(String url) {
         //send request to ilmastodieetti to calculate CO2
-        //parse the emission values from the response document
         try {
             // https://chillyfacts.com/java-send-url-http-request-read-xml-response/
             URL obj = new URL(url);
@@ -90,27 +84,7 @@ public class PublicEntry extends Entry implements Serializable {
 
             // get TotalCO if request success
             if (responseCode==200) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-                while ((inputLine = br.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                br.close();
-                con.disconnect();
-
-                // fix encoding
-                String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
-
-                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                        .parse(new InputSource(new StringReader(responseString)));
-
-                System.out.println(doc.getDocumentElement().getNodeName());
-
-                busCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Bus").item(0).getTextContent());
-                trainCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Train").item(0).getTextContent());
-                otherCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Other").item(0).getTextContent());
-                totalCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Total").item(0).getTextContent());
+                countTotalCO(con);
             } else {
                 //TODO toast unsuccessful request
                 totalCO = 0.0;
@@ -118,10 +92,43 @@ public class PublicEntry extends Entry implements Serializable {
                 trainCO = 0.0;
                 otherCO = 0.0;
             }
+            con.disconnect();
             System.out.println(busCO + ", " + trainCO + ", " + otherCO + ", "+ totalCO);
 
-        } catch (IOException | SAXException | ParserConfigurationException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void countTotalCO(HttpURLConnection con) {
+        totalCO = 0.0;
+        //parse the emission values from the response document
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            con.disconnect();
+
+            // fix encoding
+            String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
+
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                    .parse(new InputSource(new StringReader(responseString)));
+
+            System.out.println(doc.getDocumentElement().getNodeName());
+
+            busCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Bus").item(0).getTextContent());
+            trainCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Train").item(0).getTextContent());
+            otherCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Other").item(0).getTextContent());
+            totalCO = Double.parseDouble(doc.getDocumentElement().getElementsByTagName("Total").item(0).getTextContent());
+        } catch (IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+        }
+        con.disconnect();
     }
 }

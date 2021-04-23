@@ -1,15 +1,14 @@
 package com.example.ht.entries;
 
+import java.net.HttpURLConnection;
 import java.text.SimpleDateFormat;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Entry implements Serializable {
     Integer entryID;
     Date date;
     Double totalCO;
-
 
     public Integer getEntryID() { return entryID; }
 
@@ -23,7 +22,6 @@ public abstract class Entry implements Serializable {
 
     public Double getTotalCO() { return totalCO; }
 
-    public abstract void countTotalCO();
-    public abstract void readXML(String url);
-
+    public abstract void countTotalCO(HttpURLConnection con);
+    public abstract void readXML();
 }

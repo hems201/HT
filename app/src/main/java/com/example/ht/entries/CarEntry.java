@@ -24,9 +24,8 @@ public class CarEntry extends Entry implements Serializable{
     Integer km, carYear, passengers;
 
     public CarEntry(ArrayList<Integer> travelValues, Integer id, String oldDate, Double co) {
-        //open travelValues
-
         entryID = id;
+        //open travelValues
         km = travelValues.get(0);
         carYear = travelValues.get(1);
         passengers = travelValues.get(2);
@@ -38,16 +37,20 @@ public class CarEntry extends Entry implements Serializable{
         }
         System.out.println(date);
 
-        // see if CO are already included
+        // see if CO values are already included --> old entry from file
         if (co!=null) {
             totalCO = co;
         } else {
-            countTotalCO();
+            readXML();
         }
     }
 
+    public Integer getKm(){return km;}
+    public Integer getCarYear(){return carYear;}
+    public Integer getPassengers(){return passengers;}
+
     @Override
-    public void countTotalCO() {
+    public void readXML() {
         // make request url
         String url = "https://ilmastodieetti.ymparisto.fi/ilmastodieetti/calculatorapi/v1/TransportCalculator/CarEstimate?"
                 + "query.buildYear=" + carYear
@@ -55,14 +58,8 @@ public class CarEntry extends Entry implements Serializable{
                 + "&query.size=mini"
                 + "&query.passengerCount=" + passengers;
         System.out.println(url);
-        // send request
-        readXML(url);
-    }
 
-    @Override
-    public void readXML(String url) {
         //send request to ilmastodieetti to calculate CO2
-        //parse the emission values from the response document
         try {
             // https://chillyfacts.com/java-send-url-http-request-read-xml-response/
             URL obj = new URL(url);
@@ -75,36 +72,45 @@ public class CarEntry extends Entry implements Serializable{
 
             // get TotalCO if request success
             if (responseCode==200) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-                while ((inputLine = br.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                br.close();
-                con.disconnect();
-
-                // fix encoding
-                String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
-
-                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                        .parse(new InputSource(new StringReader(responseString)));
-
-                System.out.println(doc.getDocumentElement().getNodeName());
-
-                totalCO = Double.parseDouble(doc.getDocumentElement().getTextContent());
+                countTotalCO(con);
             } else {
                 //TODO toast unsuccessful request
                 totalCO = 0.0;
             }
+            con.disconnect();
             System.out.println("totalCO: " + totalCO);
 
-        } catch (IOException | SAXException | ParserConfigurationException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Integer getKm(){return km;}
-    public Integer getCarYear(){return carYear;}
-    public Integer getPassengers(){return passengers;}
+    @Override
+    public void countTotalCO(HttpURLConnection con) {
+        //parse the emission values from the response document
+        totalCO = 0.0;
+        try {
+            BufferedReader  br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+
+            // fix encoding
+            String responseString = response.toString().replaceAll("[^\\x20-\\x7e]", "");
+
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                    .parse(new InputSource(new StringReader(responseString)));
+
+            System.out.println(doc.getDocumentElement().getNodeName());
+
+            totalCO = Double.parseDouble(doc.getDocumentElement().getTextContent());
+
+        } catch (IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+        }
+        con.disconnect();
+    }
 }

@@ -50,15 +50,4 @@ public class addUserFragment extends Fragment {
         UM.addUser(name);
         startActivity(intent);
     }
-
-
-
-
-    //Sends the userinfo to the Mainactivity
-//    public void sendInfo(String name) {
-//        Intent intent = new Intent(getActivity().getBaseContext(),MainActivity.class);
-//        intent.putExtra("key", name);
-//        System.out.println(name + " fragmentista");
-//        startActivity(intent);
-//    }
 }
