@@ -51,8 +51,6 @@ public class publicEntryFragment extends Fragment {
             //create a new entry and close fragment
             createPublicEntry(lBus,sBus,lTrain,sTrain,tram,metro, user);
         });
-
-
         return view;
     }
 
@@ -77,7 +75,7 @@ public class publicEntryFragment extends Fragment {
         SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         EM.addEntry(3, travelValues, 0, sdf.format(Calendar.getInstance().getTime()), null,  user.getUserid());
 
-
+        // send user data
         Bundle nbundle = new Bundle();
         nbundle.putSerializable("user", user);
         intent.putExtras(nbundle);

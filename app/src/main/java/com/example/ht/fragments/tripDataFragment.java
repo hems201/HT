@@ -40,9 +40,12 @@ public class tripDataFragment extends Fragment {
         //TODO TUUNAA GRAAFEJA
 
         view =  inflater.inflate(R.layout.fragment_trip_data, container, false);
+
+        // Get current user and tripDataSpinner position from MenuActivity
         User user = (User) getArguments().getSerializable("user");
         int pos = getArguments().getInt("position");    //Spinner position for making the right graph
         System.out.println("POSITION: " +  pos);
+
         //make the correct graph
         if (pos == 1 || pos == 2 || pos == 3){
             makeGraph(view, user, pos);
@@ -54,13 +57,15 @@ public class tripDataFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         System.out.println("trip data view created\n");
-
     }
 
     public void makeGraph(View view, User user, int pos) {
-        System.out.println("POSITION 4: " +  pos);
+
+        // define graph from layout
         GraphView graph = view.findViewById(R.id.line_graph);
         EntryManager EM = user.getEM();
+
+        // Create data points (dp) for the graph from the correct entry array
         DataPoint[] dp;
         if (pos == 1) {
             ArrayList<PublicEntry> array = EM.getPublicArray();
@@ -70,14 +75,10 @@ public class tripDataFragment extends Fragment {
             dp = getCarData(array);
         } else if (pos ==3) {
             ArrayList<FlightEntry> array = EM.getFlightEntryArray();
-            System.out.println(array.get(0).getTotalCO() + "<-- TOTAL COs --> " + array.get(1).getTotalCO());
-            System.out.println(array.get(0).getEntryID() + "<-- ID --> " + array.get(1).getEntryID());
-            System.out.println(array.get(0).getDate() + "<-- DATES --> " + array.get(1).getDate());
             dp = getFlightData(array);
         } else { dp=null;}
 
-
-
+        //Format entry dates for X-axis
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
@@ -90,6 +91,8 @@ public class tripDataFragment extends Fragment {
             }
         });
 
+
+        // Set axises
         int dpSize = dp.length;
         Double maxX = dp[dpSize-1].getX();
         Double minX = dp[0].getX();
@@ -104,20 +107,19 @@ public class tripDataFragment extends Fragment {
         graph.getGridLabelRenderer().setHumanRounding(false);
         graph.getViewport().setScrollable(true);
 
-
-
+        // Plot line graph
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
         series.setDrawDataPoints(true);
         graph.addSeries(series);
     }
 
+    //Methods for creating data points with Total CO and date for each entry type
     public DataPoint[] getCarData (ArrayList<CarEntry> array){
         int size = array.size();
         DataPoint[] dp = new DataPoint[size];
         for(int i=0;i<size;i++){
             Date x = array.get(i).getDateTime();
             Double y = array.get(i).getTotalCO();
-
             dp[i] = new DataPoint(x, y);
         }
         return dp;
@@ -143,11 +145,12 @@ public class tripDataFragment extends Fragment {
         return dp;
     }
 
-
+    // Created a bar graph with Total CO from all entry types and their sum
     public void makeAllEntriesGraph(View view, User user) {
 
         GraphView graph = view.findViewById(R.id.line_graph);
 
+        // Get arrays and calculate CO sums
         EntryManager EM = user.getEM();
         ArrayList<CarEntry> carArray = EM.getCarEntryArray();
         ArrayList<FlightEntry> flightArray = EM.getFlightEntryArray();
@@ -173,6 +176,7 @@ public class tripDataFragment extends Fragment {
                 new DataPoint(3, flightSum),
         });
 
+        // Format X-axis label
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
         staticLabelsFormatter.setHorizontalLabels(new String[]{"Total CO", "Car", "Public Transport", "Flights"});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);

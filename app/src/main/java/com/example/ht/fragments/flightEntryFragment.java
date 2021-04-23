@@ -28,6 +28,7 @@ public class flightEntryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // get user from MenuActivity
         assert getArguments() != null;
         User user = (User) getArguments().getSerializable("user");
         view =  inflater.inflate(R.layout.fragment_flight_entry, container, false);
@@ -59,7 +60,6 @@ public class flightEntryFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         System.out.println("flight entry view created\n");
-
     }
 
     public void createFlightEntry(int fFin, int FEu, int FCan, int FTra, User user) {
@@ -76,9 +76,8 @@ public class flightEntryFragment extends Fragment {
         EntryManager EM = user.getEM();
         SimpleDateFormat sdf =  new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         EM.addEntry(2, travelValues, 0, sdf.format(Calendar.getInstance().getTime()), null,  user.getUserid());
-        System.out.println("TRAVEL VALUES IN ENTRY FRAGMENT: " + travelValues);
 
-
+        //send user data
         Bundle nbundle = new Bundle();
         nbundle.putSerializable("user", user);
         intent.putExtras(nbundle);
