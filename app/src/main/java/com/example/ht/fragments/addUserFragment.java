@@ -27,12 +27,9 @@ public class addUserFragment extends Fragment {
         Button createUserBtn = view.findViewById(R.id.createUserBtn);
         EditText editTextName = this.view.findViewById(R.id.editTextName);
 
-        createUserBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = editTextName.getText().toString();
-                createUser(name);
-            }
+        createUserBtn.setOnClickListener(view -> {
+            String name = editTextName.getText().toString();
+            createUser(name);
         });
         return view;
     }

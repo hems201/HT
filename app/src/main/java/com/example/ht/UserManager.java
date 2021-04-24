@@ -82,11 +82,7 @@ public class UserManager implements Serializable {
 
             istream.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
+        } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
@@ -147,15 +143,7 @@ public class UserManager implements Serializable {
 
             System.out.println("added to file user " + username);
             idCounter++;
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -199,25 +187,10 @@ public class UserManager implements Serializable {
             fileos.close();
 
             System.out.println("Saved to new file: " + username);
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IllegalArgumentException | IllegalStateException | IOException e) {
             e.printStackTrace();
         }
 
-    }
-
-    public void deleteUser(){
-        // delete from array and file
-        //optional
     }
 
     public ArrayList<User> getUser_array() {

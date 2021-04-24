@@ -49,12 +49,6 @@ public class EntryManager implements Serializable {
 
     //-------------------------------------------------------------------------//
 
-    public void readEntries() {
-        //return all entries
-    }
-    public void getEntry(String entryID) {
-        //
-    }
     public ArrayList<PublicEntry> getPublicArray() {
         return publicEntryArray;
     }
@@ -356,9 +350,5 @@ public class EntryManager implements Serializable {
         } catch (TransformerException e) {
             e.printStackTrace();
         }
-    }
-
-    public void deleteEntry(String entryID) {
-        //optional
     }
 }

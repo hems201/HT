@@ -11,6 +11,7 @@
         android:id="@+id/addPublicEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/light_blue_A200"
         android:text="@string/add_public_transport_trip"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

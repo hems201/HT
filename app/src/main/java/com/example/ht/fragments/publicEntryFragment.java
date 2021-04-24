@@ -62,7 +62,7 @@ public class publicEntryFragment extends Fragment {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
 
         // add relevant values to list
-        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        ArrayList<Integer> travelValues = new ArrayList<>();
         travelValues.add(lBus);
         travelValues.add(sBus);
         travelValues.add(lTrain);

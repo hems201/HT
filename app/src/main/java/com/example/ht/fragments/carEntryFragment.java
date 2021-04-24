@@ -68,7 +68,7 @@ public class carEntryFragment extends Fragment {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
 
         // add relevant values to list
-        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        ArrayList<Integer> travelValues = new ArrayList<>();
         travelValues.add(km);
         travelValues.add(carYear);
         travelValues.add(passengers);

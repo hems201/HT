@@ -12,11 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.ht.MainActivity;
 import com.example.ht.MenuActivity;
 import com.example.ht.R;
 import com.example.ht.User;
-import com.example.ht.UserManager;
 import com.example.ht.entries.EntryManager;
 
 import java.text.SimpleDateFormat;
@@ -40,18 +38,15 @@ public class flightEntryFragment extends Fragment {
         EditText editFlightsCont = view.findViewById(R.id.editFlightsCont);
 
         Button addFlightBtn = view.findViewById(R.id.addFlightEntry);
-        addFlightBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //get text input contents
-                int planeFin = Integer.parseInt(String.valueOf(editFlightsFin.getText()));
-                int planeEu = Integer.parseInt(String.valueOf(editFlightsEu.getText()));
-                int planeCa = Integer.parseInt(String.valueOf(editFlightsCanary.getText()));
-                int planeTra = Integer.parseInt(String.valueOf(editFlightsCont.getText()));
+        addFlightBtn.setOnClickListener(v -> {
+            //get text input contents
+            int planeFin = Integer.parseInt(String.valueOf(editFlightsFin.getText()));
+            int planeEu = Integer.parseInt(String.valueOf(editFlightsEu.getText()));
+            int planeCa = Integer.parseInt(String.valueOf(editFlightsCanary.getText()));
+            int planeTra = Integer.parseInt(String.valueOf(editFlightsCont.getText()));
 
-                //create a new entry and close fragment
-                createFlightEntry(planeFin, planeEu, planeCa, planeTra, user);
-            }
+            //create a new entry and close fragment
+            createFlightEntry(planeFin, planeEu, planeCa, planeTra, user);
         });
 
 
@@ -66,7 +61,7 @@ public class flightEntryFragment extends Fragment {
         Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
 
         // add relevant values to list
-        ArrayList<Integer> travelValues = new ArrayList<Integer>();
+        ArrayList<Integer> travelValues = new ArrayList<>();
         travelValues.add(fFin);
         travelValues.add(FEu);
         travelValues.add(FCan);
