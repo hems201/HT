@@ -15,11 +15,9 @@ public class User implements Serializable {
     private EntryManager EM;
 
     public User(String n, int id, NodeList managerData) {
-        System.out.println("USER CREATED");
         username = n;
         userid = id;
         EM = new EntryManager();
-        System.out.println("EM CREATED");
 
         //READ ENTRY DATA FROM FILE
         if (managerData!=null && managerData.item(0)!=null) {
@@ -48,7 +46,6 @@ public class User implements Serializable {
                         coList = new ArrayList<Double>();
                         Element ce = (Element) cnode;
                         //get all entry information
-                        System.out.println("USER.JAVA get all entry information");
                         entryID = Integer.parseInt(ce.getElementsByTagName("EntryID").item(0).getTextContent());
                         String date = ce.getElementsByTagName("Date").item(0).getTextContent();
                         Double totalCO = Double.parseDouble(ce.getElementsByTagName("TotalCO").item(0).getTextContent());
@@ -76,7 +73,6 @@ public class User implements Serializable {
 
                     if (node.getNodeType() == fnode.ELEMENT_NODE) {
                         coList = new ArrayList<Double>();
-                        System.out.println("USER.JAVA get all entry information flights");
                         Element ce = (Element) fnode;
                         //get all entry information
                         entryID = Integer.parseInt(ce.getElementsByTagName("EntryID").item(0).getTextContent());
@@ -147,7 +143,6 @@ public class User implements Serializable {
     }
 
     public EntryManager getEM() {
-        System.out.println("EM RETURNED");
         return EM;}
 
     @Override

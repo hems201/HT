@@ -1,19 +1,21 @@
 package com.example.ht.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.ht.ContextProvider;
+import com.example.ht.MenuActivity;
 import com.example.ht.R;
 import com.example.ht.User;
 import com.example.ht.entries.CarEntry;
-import com.example.ht.entries.Entry;
 import com.example.ht.entries.EntryManager;
 import com.example.ht.entries.FlightEntry;
 import com.example.ht.entries.PublicEntry;
@@ -23,27 +25,23 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.PointsGraphSeries;
-
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class tripDataFragment extends Fragment {
     View view;
-
+    User user;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //TODO TUUNAA GRAAFEJA
 
         view =  inflater.inflate(R.layout.fragment_trip_data, container, false);
 
         // Get current user and tripDataSpinner position from MenuActivity
-        User user = (User) getArguments().getSerializable("user");
+        assert getArguments() != null;
+        user = (User) getArguments().getSerializable("user");
         int pos = getArguments().getInt("position");    //Spinner position for making the right graph
-        System.out.println("POSITION: " +  pos);
 
         //make the correct graph
         if (pos == 1 || pos == 2 || pos == 3){
@@ -60,56 +58,75 @@ public class tripDataFragment extends Fragment {
 
     public void makeGraph(View view, User user, int pos) {
 
-        // define graph from layout
-        GraphView graph = view.findViewById(R.id.line_graph);
         EntryManager EM = user.getEM();
 
         // Create data points (dp) for the graph from the correct entry array
         DataPoint[] dp;
         if (pos == 1) {
             ArrayList<PublicEntry> array = EM.getPublicArray();
-            dp = getPublicData(array);
+            if(array.size()>0) {
+                dp = getPublicData(array);
+            } else {
+                dp = null;
+                closeFragment();
+                Toast.makeText(ContextProvider.getContext(),"Add a public transport entry first.", Toast.LENGTH_SHORT).show();
+            }
+
         } else if (pos == 2) {
             ArrayList<CarEntry> array = EM.getCarEntryArray();
-            dp = getCarData(array);
+            if(array.size()>0) {
+                dp = getCarData(array);
+            } else {
+                dp = null;
+                closeFragment();
+                Toast.makeText(ContextProvider.getContext(),"Add a car entry first.", Toast.LENGTH_SHORT).show();
+            }
+
         } else if (pos ==3) {
             ArrayList<FlightEntry> array = EM.getFlightEntryArray();
-            dp = getFlightData(array);
+            if(array.size()>0) {
+                dp = getFlightData(array);
+            } else {
+                dp = null;
+                closeFragment();
+                Toast.makeText(ContextProvider.getContext(),"Add a flight entry first.", Toast.LENGTH_SHORT).show();
+            }
         } else { dp=null;}
 
-        //Format entry dates for X-axis
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
-            @Override
-            public String formatLabel(double value, boolean isValueX) {
-                if(isValueX){
-                    return sdf.format(new Date((long)value));
-                } else {
-                    return super.formatLabel(value, isValueX);
+        //Plot if data points exist
+        if (dp != null) {
+            // define graph from layout
+            GraphView graph = view.findViewById(R.id.line_graph);
+            //Format entry dates for X-axis
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+                @Override
+                public String formatLabel(double value, boolean isValueX) {
+                    if(isValueX){
+                        return sdf.format(new Date((long)value));
+                    } else {
+                        return super.formatLabel(value, isValueX);
+                    }
                 }
-            }
-        });
+            });
 
+            // Set axises
+            int dpSize = dp.length;
+            double maxX = dp[dpSize-1].getX();
+            double minX = dp[0].getX();
+            graph.getViewport().setMaxX(maxX);
+            graph.getViewport().setMinX(minX);
 
-        // Set axises
-        int dpSize = dp.length;
-        Double maxX = dp[dpSize-1].getX();
-        Double minX = dp[0].getX();
-//        Double maxY = dp[dpSize-1].getY();
-//        graph.getViewport().setMinY(0);
-//        graph.getViewport().setMaxY(maxY);
-//        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMaxX(maxX);
-        graph.getViewport().setMinX(minX);
+            graph.getViewport().setXAxisBoundsManual(true);
+            graph.getGridLabelRenderer().setHumanRounding(false);
+            graph.getViewport().setScrollable(true);
 
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getGridLabelRenderer().setHumanRounding(false);
-        graph.getViewport().setScrollable(true);
+            // Plot line graph
+            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
+            series.setDrawDataPoints(true);
+            graph.addSeries(series);
+        }
 
-        // Plot line graph
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dp);
-        series.setDrawDataPoints(true);
-        graph.addSeries(series);
     }
 
     //Methods for creating data points with Total CO and date for each entry type
@@ -181,5 +198,15 @@ public class tripDataFragment extends Fragment {
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
         series.setSpacing(40);
         graph.addSeries(series);
+    }
+
+    // Go back to MenuActivity if entry arrays are empty
+    public void closeFragment(){
+        Intent intent = new Intent(getActivity().getBaseContext(), MenuActivity.class);
+        // send user data
+        Bundle nbundle = new Bundle();
+        nbundle.putSerializable("user", user);
+        intent.putExtras(nbundle);
+        startActivity(intent);
     }
 }
