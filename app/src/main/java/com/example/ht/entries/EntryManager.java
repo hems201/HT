@@ -117,7 +117,7 @@ public class EntryManager implements Serializable {
 
     public void appendCarEntry(int userId, CarEntry newEntry) {
         // add new CarEntry to userdata file
-        //TODO CODE SOURCE
+        //http://www.java2s.com/Tutorials/Java/XML_HTML_How_to/DOM/Append_a_node_to_an_existing_XML_file.htm
         try {
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
@@ -188,6 +188,7 @@ public class EntryManager implements Serializable {
             e.printStackTrace();
         }
     }
+
     public void appendFlightEntry(int userId, FlightEntry newEntry) {
         // add new FlightEntry do userdata file
         try {

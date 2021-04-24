@@ -113,6 +113,8 @@ public class UserManager implements Serializable {
     }
 
     public void appendUser(String username, int userID) {
+        //add user to file
+        //http://www.java2s.com/Tutorials/Java/XML_HTML_How_to/DOM/Append_a_node_to_an_existing_XML_file.htm
         try {
             DocumentBuilderFactory docFact = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFact.newDocumentBuilder();
